@@ -23,10 +23,10 @@
 - По желанию можно скомпилировать **.py файл в .exe**, используя **pyinstaller**
 
 **Linux\Termux:**
-- apt install python git
-- git clone https://github.com/MatroCholo/email-sender-gui
-- cd email-sender-gui/
-- python email-sender-gui.py
+- apt **install python git**
+- git clone **https://github.com/MatroCholo/email-sender-gui**
+- cd **email-sender-gui/**
+- python **email-sender-gui.py**
 
 ## Как со мной связаться?:
-- Telegram: https://t.me/MatroCholo
+- **Telegram**: https://t.me/MatroCholo
