@@ -29,4 +29,4 @@
 - python **email-sender-gui.py**
 
 ## Как со мной связаться?:
-- **Telegram**: https://t.me/MatroCholo
+- **Telegram: https://t.me/MatroCholo**
