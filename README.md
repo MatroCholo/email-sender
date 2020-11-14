@@ -22,7 +22,7 @@
 - Запустить **email-sender-gui.py**
 - По желанию можно скомпилировать **.py файл в .exe**, используя **pyinstaller**
 
-**Linux\Termux:**
+**Linux:**
 - apt **install python git**
 - git clone **https://github.com/MatroCholo/email-sender-gui**
 - cd **email-sender-gui/**
