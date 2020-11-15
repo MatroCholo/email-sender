@@ -27,7 +27,7 @@
 - apt **install python git**
 - git clone **https://github.com/MatroCholo/email-sender-gui**
 - **pip install guizero**
-- cd **email-sender-gui/**
+- cd **email-sender-gui-main/**
 - python **email-sender-gui.py**
 
 ## Как со мной связаться?:
