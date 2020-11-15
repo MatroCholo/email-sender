@@ -19,12 +19,14 @@
 **Windows\MacOS:**
 - Скачать **Python 3.x**.
 - Скачать архив и распаковать
+- В cmd.exe вписать **pip install guizero**
 - Запустить **email-sender-gui.py**
 - По желанию можно скомпилировать **.py файл в .exe**, используя **pyinstaller**
 
 **Linux:**
 - apt **install python git**
 - git clone **https://github.com/MatroCholo/email-sender-gui**
+- **pip install guizero**
 - cd **email-sender-gui/**
 - python **email-sender-gui.py**
 
