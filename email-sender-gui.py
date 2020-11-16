@@ -1,5 +1,5 @@
 # Библиотеки -------------------------------------------------
-from guizero import App, Text, CheckBox, PushButton, TextBox, Window, MenuBar, Picture
+from guizero import App, MenuBar, Picture, PushButton, Text, TextBox, Window
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -33,8 +33,16 @@ def send():
         app.info('Уведомление', 'Сообщение успешно доставлено')
     except:
         app.error('Уведомление', 'Сообщение не доставлено')
+# Закрытие -------------------------------------------------------
 def close():
     app.destroy()
+def docs_close():
+    docs_window.hide()
+def info_close():
+    info_window.hide()
+def thanks_close():
+    thanks_window.hide()
+# Для менюбара ---------------------------------------------------
 def update():
     app.info('Уведомление', 'Установлена последняя версия')
 def info():
@@ -51,19 +59,54 @@ def testwarn():
     app.warn('Проверка', 'Предупреждение')
 def add_file():
     app.select_file(title="Выберите файл", folder=".", filetypes=[["All files", ".*"]], save=False)
-# Основное -----------------------------------------------------
-app = App("Почта v0.3", layout='grid', height=205, width=325)
+# Окна -----------------------------------------------------
+app = App("Почта v0.4", layout='grid', height=205, width=325)
 app.bg='#FDFDFD'
 logo = Picture(app, image='logo.png', grid=[0,0])
-info_window = Window(app, 'Информация', layout='grid', height=165, width=270)
+info_window = Window(app, 'Информация', layout='grid', height=240, width=270)
+info_window.bg='#FDFDFD'
 info_logo = Picture(info_window, image='info_logo.png', grid=[0,0])
-docs_window = Window(app, 'Документация', layout='grid', height=165, width=270)
-docs_logo = Picture(docs_window, image='docs.png', grid=[0,0])
-thanks_window = Window(app, 'Благодарности', layout='grid', height=165, width=270)
-thanks_logo = Picture(thanks_window, image='thanks.png', grid=[0,0])
+info_text = Text(info_window, '', grid=[0,1])
+info_button = PushButton(info_window, text='Закрыть', command=info_close, grid=[0,2])
 info_window.hide()
+docs_window = Window(app, 'Документация', layout='grid', height=240, width=271)
+docs_window.bg='#FDFDFD'
+docs_logo = Picture(docs_window, image='docs.png', grid=[0,0])
+docs_text = Text(docs_window, '', grid=[0,1])
+docs_button = PushButton(docs_window, text='Закрыть', command=docs_close, grid=[0,2])
 docs_window.hide()
+thanks_window = Window(app, 'Благодарности', layout='grid', height=240, width=271)
+thanks_window.bg='#FDFDFD'
+thanks_logo = Picture(thanks_window, image='thanks.png', grid=[0,0])
+thanks_text = Text(thanks_window, '', grid=[0,1])
+thanks_button = PushButton(thanks_window, text='Закрыть', command=thanks_close, grid=[0,2])
 thanks_window.hide()
+addr_from = Text(app, 'Почта: ', grid=[0,1], align='left')
+addr_from.text_size=9
+addr_from_box = TextBox(app, grid=[1,1], align='left', width=25)
+addr_from_box.bg = '#FBFBFB'
+password = Text(app, 'Пароль: ', grid=[0,2], align='left')
+password.text_size=9
+password_box = TextBox(app, grid=[1,2], align='left', width=25)
+password_box.bg = '#FBFBFB'
+addr_to = Text(app, 'Почта получателя: ', grid=[0,3], align='left')
+addr_to.text_size=9
+addr_to_box = TextBox(app, grid=[1,3], align='left', width=25)
+addr_to_box.bg = '#FBFBFB'
+subject = Text(app, 'Тема сообщения: ', grid=[0,4], align='left')
+subject.text_size=9
+subject_box = TextBox(app, grid=[1,4], align='left', width=25)
+subject_box.bg = '#FBFBFB'
+message = Text(app, 'Текст сообщения: ', grid=[0,5], align='left')
+message.text_size=9
+message_box = TextBox(app, grid=[1,5], align='left', width=25)
+message_box.bg='#FBFBFB'
+send_button = PushButton(app, text='Отправить\n сообщение', command=send, grid=[0,6], align='left')
+send_button.text_size=9
+send_button.bg='#FCFCFC'
+add_file_button = PushButton(app, text='Прикрепить\n вложение', command=add_file, grid=[1,6], align='right')
+add_file_button.text_size=9
+add_file_button.bg='#FCFCFC'
 # Менюбар -------------------------------------------------------
 menubar = MenuBar(app,
                   toplevel=["Файл", 'Опции', "Помощь"],
@@ -72,37 +115,5 @@ menubar = MenuBar(app,
                       [ ['Вызвать тестовое уведомление', testinfo], ['Вызвать тестовую ошибку', testerror], ['Вызвать тестовое предупреждение',testwarn] ],
                       [ ["Документация", docs], ['Благодарности', thanks] ]
                   ])
-# Адресат -------------------------------------------------------
-addr_from = Text(app, 'Почта: ', grid=[0,1], align='left')
-addr_from.text_size=9
-addr_from_box = TextBox(app, grid=[1,1], align='left', width=25)
-addr_from_box.bg = '#FBFBFB'
-# Пароль --------------------------------------------------------
-password = Text(app, 'Пароль: ', grid=[0,2], align='left')
-password.text_size=9
-password_box = TextBox(app, grid=[1,2], align='left', width=25)
-password_box.bg = '#FBFBFB'
-# Получатель ----------------------------------------------------
-addr_to = Text(app, 'Почта получателя: ', grid=[0,3], align='left')
-addr_to.text_size=9
-addr_to_box = TextBox(app, grid=[1,3], align='left', width=25)
-addr_to_box.bg = '#FBFBFB'
-# Тема сообщения ------------------------------------------------
-subject = Text(app, 'Тема сообщения: ', grid=[0,4], align='left')
-subject.text_size=9
-subject_box = TextBox(app, grid=[1,4], align='left', width=25)
-subject_box.bg = '#FBFBFB'
-# Текст сообщения -----------------------------------------------
-message = Text(app, 'Текст сообщения: ', grid=[0,5], align='left')
-message.text_size=9
-message_box = TextBox(app, grid=[1,5], align='left', width=25)
-message_box.bg='#FBFBFB'
-# Кнопки----------------------------------------------------------
-send_button = PushButton(app, text='Отправить\n сообщение', command=send, grid=[0,6], align='left')
-send_button.text_size=9
-send_button.bg='#FCFCFC'
-add_file_button = PushButton(app, text='Прикрепить\n вложение', command=add_file, grid=[1,6], align='right')
-add_file_button.text_size=9
-add_file_button.bg='#FCFCFC'
 # Отрисовка ------------------------------------------------------
 app.display()
