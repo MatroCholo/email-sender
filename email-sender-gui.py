@@ -111,7 +111,7 @@ def docs():
 def thanks():
     thanks_window.show()
 # Окна -----------------------------------------------------
-app = App("Почта v0.4", layout='grid', height=205, width=325)
+app = App("Email Sender, v1.0", layout='grid', height=205, width=325)
 app.bg='#FDFDFD'
 logo = Picture(app, image='logo.png', grid=[0,0])
 info_window = Window(app, 'Информация', layout='grid', height=240, width=270)
