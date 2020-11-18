@@ -26,7 +26,6 @@ def send():
     if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
         _server = 'smtp.office365.com'
         _port = 587
-        print(addr_from)
     #if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
         #_server = 'smtp.mail.me.com'
         #_port = 587
