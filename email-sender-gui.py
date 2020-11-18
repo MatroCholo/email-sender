@@ -11,6 +11,7 @@ from email.mime.audio import MIMEAudio
 from email.mime.multipart import MIMEMultipart
 # Функции -----------------------------------------------------
 def send():
+    app.info('Уведомление', 'Убедитесь, что вы верно ввели данные')
     addr_from = addr_from_box.value
     password = password_box.value
     addr_to = addr_to_box.value
@@ -44,6 +45,7 @@ def send():
     except:
         app.error('Ошибка', 'Сообщение не доставлено')
 def send_files():
+    app.info('Уведомление', 'Убедитесь, что вы верно ввели данные')
     addr_from = addr_from_box.value
     password = password_box.value
     addr_to = addr_to_box.value
@@ -101,7 +103,7 @@ def send_files():
         app.info('Уведомление', 'Сообщение успешно доставлено')
     except:
         app.error('Уведомление', 'Сообщение не доставлено')
-# Закрытие -------------------------------------------------------
+# Для закрытия окон -------------------------------------------------------
 def close():
     app.destroy()
 def docs_close():
@@ -117,55 +119,84 @@ def docs():
     docs_window.show()
 def thanks():
     thanks_window.show()
-# Окна -----------------------------------------------------
-app = App("Email Sender, v1.0.2", height=205, width=270)
+# Основное -----------------------------------------------------
+app = App("Email Sender, v1.0.3", height=300, width=337)
 app.bg='#FDFDFD'
+# Боксы для корректной отрисовки -------------------------------
 title_box = Box(app, layout='grid', align='top', width='fill')
-form_box = Box(app, layout='grid', align='top', width='fill')
-button_box = Box(app, align='top', width='fill')
+main_box = Box(app, align='top', width='fill')
+name_box = Box(main_box, align='top', width='fill')
+button_box = Box(app, align='bottom', width='fill')
+# Боксы внутри уже существующих боксов, для точнейшей отрисовки-
+mail_box = Box(name_box, align='top', width='fill')
+pass_box = Box(name_box, align='top', width='fill')
+mail_to_box = Box(name_box, align='top', width='fill')
+sub_box = Box(name_box, align='top', width='fill')
+msg_box = Box(name_box, align='top', width='fill')
+# Картинка с логотипом -----------------------------------------
 logo = Picture(title_box, image='logo.png', grid=[0,0])
+# Окна из менюбара ---------------------------------------------
 info_window = Window(app, 'Информация', layout='grid', height=145, width=270)
 info_window.bg='#FDFDFD'
 info_logo = Picture(info_window, image='info_logo.png', grid=[0,0])
 info_text = Text(info_window, '', grid=[0,1])
 info_window.hide()
+# --------------------------------------------------------------
 docs_window = Window(app, 'Документация', layout='grid', height=166, width=271)
 docs_window.bg='#FDFDFD'
 docs_logo = Picture(docs_window, image='docs.png', grid=[0,0])
 docs_text = Text(docs_window, '', grid=[0,1])
 docs_window.hide()
+# --------------------------------------------------------------
 thanks_window = Window(app, 'Благодарности', layout='grid', height=166, width=271)
 thanks_window.bg='#FDFDFD'
 thanks_logo = Picture(thanks_window, image='thanks.png', grid=[0,0])
 thanks_text = Text(thanks_window, '', grid=[0,1])
 thanks_window.hide()
-addr_from = Text(form_box, 'Почта: ', grid=[0,0], align='left')
-addr_from.text_size=9
-addr_from_box = TextBox(form_box, grid=[1,0], align='left', width=25)
+# Текст --------------------------------------------------------
+addr_from = Text(mail_box, 'Почта', align='left')
+addr_from.text_size=10
+addr_from.font='Open Sans'
+# --------------------------------------------------------------
+password = Text(pass_box, 'Пароль', align='left')
+password.text_size=10
+password.font='Open Sans'
+# --------------------------------------------------------------
+addr_to = Text(mail_to_box, 'Почта получателя', align='left')
+addr_to.text_size=10
+addr_to.font='Open Sans'
+# --------------------------------------------------------------
+subject = Text(sub_box, 'Тема сообщения', align='left')
+subject.text_size=10
+subject.font='Open Sans'
+# --------------------------------------------------------------
+message = Text(msg_box, 'Текст сообщения', align='left')
+message.text_size=10
+message.font='Open Sans'
+# Формы для ввода текста ---------------------------------------
+addr_from_box = TextBox(mail_box, align='right', width=35)
 addr_from_box.bg = '#FBFBFB'
-password = Text(form_box, 'Пароль: ', grid=[0,1], align='left')
-password.text_size=9
-password_box = TextBox(form_box, grid=[1,1], align='left', width=25)
+# --------------------------------------------------------------
+password_box = TextBox(pass_box, align='right', width=35)
 password_box.bg = '#FBFBFB'
-addr_to = Text(form_box, 'Почта получателя: ', grid=[0,2], align='left')
-addr_to.text_size=9
-addr_to_box = TextBox(form_box, grid=[1,2], align='left', width=25)
+# --------------------------------------------------------------
+addr_to_box = TextBox(mail_to_box, align='right', width=35)
 addr_to_box.bg = '#FBFBFB'
-subject = Text(form_box, 'Тема сообщения: ', grid=[0,3], align='left')
-subject.text_size=9
-subject_box = TextBox(form_box, grid=[1,3], align='left', width=25)
+# --------------------------------------------------------------
+subject_box = TextBox(sub_box, align='right', width=35)
 subject_box.bg = '#FBFBFB'
-message = Text(form_box, 'Текст сообщения: ', grid=[0,4], align='left')
-message.text_size=9
-message_box = TextBox(form_box, grid=[1,4], align='left', width=25)
+# --------------------------------------------------------------
+message_box = TextBox(msg_box, align='right', width=35)
 message_box.bg='#FBFBFB'
 # Отправка без файлов -------------------------------------------
 send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
-send_button.text_size=9
+send_button.text_size=10
+send_button.font='Open Sans'
 send_button.bg='#FCFCFC'
 # Отправка с файлами --------------------------------------------
 send_extra_button = PushButton(button_box, text='Отправить письмо\nс файлом', command=send_files, height=2, width=13, align='right')
 send_extra_button.text_size=9
+send_extra_button.font='Open Sans'
 send_extra_button.bg='#FCFCFC'
 # Менюбар -------------------------------------------------------
 menubar = MenuBar(app,
