@@ -111,7 +111,7 @@ def docs():
 def thanks():
     thanks_window.show()
 # Окна -----------------------------------------------------
-app = App("Почта v1.0.1", height=205, width=270)
+app = App("Email Sender, v1.0.1", height=205, width=270)
 app.bg='#FDFDFD'
 title_box = Box(app, layout='grid', align='top', width='fill')
 form_box = Box(app, layout='grid', align='top', width='fill')
