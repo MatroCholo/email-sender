@@ -19,12 +19,16 @@ def send():
     if addr_from[-9:] == 'gmail.com':
         _server = 'smtp.gmail.com'
         _port = 587
-    if addr_from[-9:] == 'yandex.ru' or addr_from[-5:] == 'ya.ru':
-        _server = 'smtp.yandex.ru'
-        _port = 465
     if addr_from[-7:] == 'mail.ru' or addr_from[-5:] == 'bk.ru' or addr_from[-8:] == 'inbox.ru' or addr_from[-7:] == 'list.ru':
         _server = 'smtp.mail.ru'
         _port = 25
+    if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
+        _server = 'smtp.office365.com'
+        _port = 587
+        print(addr_from)
+    #if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
+        #_server = 'smtp.mail.me.com'
+        #_port = 587
     msg = MIMEMultipart()
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
@@ -48,12 +52,15 @@ def send_files():
     if addr_from[-9:] == 'gmail.com':
         _server = 'smtp.gmail.com'
         _port = 587
-    if addr_from[-9:] == 'yandex.ru' or addr_from[-5:] == 'ya.ru':
-        _server = 'smtp.yandex.ru'
-        _port = 465
     if addr_from[-7:] == 'mail.ru' or addr_from[-5:] == 'bk.ru' or addr_from[-8:] == 'inbox.ru' or addr_from[-7:] == 'list.ru':
         _server = 'smtp.mail.ru'
         _port = 25
+    if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
+        _server = 'smtp.office365.com'
+        _port = 587
+    #if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
+        #_server = 'smtp.mail.me.com'
+        #_port = 587
     msg = MIMEMultipart()
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
@@ -111,7 +118,7 @@ def docs():
 def thanks():
     thanks_window.show()
 # Окна -----------------------------------------------------
-app = App("Email Sender, v1.0.1", height=205, width=270)
+app = App("Email Sender, v1.0.2", height=205, width=270)
 app.bg='#FDFDFD'
 title_box = Box(app, layout='grid', align='top', width='fill')
 form_box = Box(app, layout='grid', align='top', width='fill')
@@ -152,9 +159,11 @@ message = Text(form_box, 'Текст сообщения: ', grid=[0,4], align='l
 message.text_size=9
 message_box = TextBox(form_box, grid=[1,4], align='left', width=25)
 message_box.bg='#FBFBFB'
+# Отправка без файлов -------------------------------------------
 send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
 send_button.text_size=9
 send_button.bg='#FCFCFC'
+# Отправка с файлами --------------------------------------------
 send_extra_button = PushButton(button_box, text='Отправить письмо\nс файлом', command=send_files, height=2, width=13, align='right')
 send_extra_button.text_size=9
 send_extra_button.bg='#FCFCFC'
