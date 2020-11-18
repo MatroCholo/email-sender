@@ -1,5 +1,5 @@
-# Библиотеки -------------------------------------------------
-from guizero import App, MenuBar, Picture, PushButton, Text, TextBox, Window
+# Необходимые библиотеки -------------------------------------
+from guizero import App, Box, MenuBar, Picture, PushButton, Text, TextBox, Window
 import smtplib
 import os
 import mimetypes
@@ -111,51 +111,51 @@ def docs():
 def thanks():
     thanks_window.show()
 # Окна -----------------------------------------------------
-app = App("Email Sender, v1.0", layout='grid', height=205, width=325)
+app = App("Почта v1.0.1", height=205, width=270)
 app.bg='#FDFDFD'
-logo = Picture(app, image='logo.png', grid=[0,0])
-info_window = Window(app, 'Информация', layout='grid', height=240, width=270)
+title_box = Box(app, layout='grid', align='top', width='fill')
+form_box = Box(app, layout='grid', align='top', width='fill')
+button_box = Box(app, align='top', width='fill')
+logo = Picture(title_box, image='logo.png', grid=[0,0])
+info_window = Window(app, 'Информация', layout='grid', height=145, width=270)
 info_window.bg='#FDFDFD'
 info_logo = Picture(info_window, image='info_logo.png', grid=[0,0])
 info_text = Text(info_window, '', grid=[0,1])
-info_button = PushButton(info_window, text='Закрыть', command=info_close, grid=[0,2], height=1, width=4)
 info_window.hide()
-docs_window = Window(app, 'Документация', layout='grid', height=240, width=271)
+docs_window = Window(app, 'Документация', layout='grid', height=166, width=271)
 docs_window.bg='#FDFDFD'
 docs_logo = Picture(docs_window, image='docs.png', grid=[0,0])
 docs_text = Text(docs_window, '', grid=[0,1])
-docs_button = PushButton(docs_window, text='Закрыть', command=docs_close, grid=[0,2], height=1, width=4)
 docs_window.hide()
-thanks_window = Window(app, 'Благодарности', layout='grid', height=240, width=271)
+thanks_window = Window(app, 'Благодарности', layout='grid', height=166, width=271)
 thanks_window.bg='#FDFDFD'
 thanks_logo = Picture(thanks_window, image='thanks.png', grid=[0,0])
 thanks_text = Text(thanks_window, '', grid=[0,1])
-thanks_button = PushButton(thanks_window, text='Закрыть', command=thanks_close, grid=[0,2], height=1, width=4)
 thanks_window.hide()
-addr_from = Text(app, 'Почта: ', grid=[0,1], align='left')
+addr_from = Text(form_box, 'Почта: ', grid=[0,0], align='left')
 addr_from.text_size=9
-addr_from_box = TextBox(app, grid=[1,1], align='left', width=25)
+addr_from_box = TextBox(form_box, grid=[1,0], align='left', width=25)
 addr_from_box.bg = '#FBFBFB'
-password = Text(app, 'Пароль: ', grid=[0,2], align='left')
+password = Text(form_box, 'Пароль: ', grid=[0,1], align='left')
 password.text_size=9
-password_box = TextBox(app, grid=[1,2], align='left', width=25)
+password_box = TextBox(form_box, grid=[1,1], align='left', width=25)
 password_box.bg = '#FBFBFB'
-addr_to = Text(app, 'Почта получателя: ', grid=[0,3], align='left')
+addr_to = Text(form_box, 'Почта получателя: ', grid=[0,2], align='left')
 addr_to.text_size=9
-addr_to_box = TextBox(app, grid=[1,3], align='left', width=25)
+addr_to_box = TextBox(form_box, grid=[1,2], align='left', width=25)
 addr_to_box.bg = '#FBFBFB'
-subject = Text(app, 'Тема сообщения: ', grid=[0,4], align='left')
+subject = Text(form_box, 'Тема сообщения: ', grid=[0,3], align='left')
 subject.text_size=9
-subject_box = TextBox(app, grid=[1,4], align='left', width=25)
+subject_box = TextBox(form_box, grid=[1,3], align='left', width=25)
 subject_box.bg = '#FBFBFB'
-message = Text(app, 'Текст сообщения: ', grid=[0,5], align='left')
+message = Text(form_box, 'Текст сообщения: ', grid=[0,4], align='left')
 message.text_size=9
-message_box = TextBox(app, grid=[1,5], align='left', width=25)
+message_box = TextBox(form_box, grid=[1,4], align='left', width=25)
 message_box.bg='#FBFBFB'
-send_button = PushButton(app, text='Отправить\nписьмо', command=send, grid=[0,7], height=2, width=10, align='left')
+send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
 send_button.text_size=9
 send_button.bg='#FCFCFC'
-send_extra_button = PushButton(app, text='Отправить письмо\nс файлом', command=send_files, grid=[1,7], height=2, width=13, align='right')
+send_extra_button = PushButton(button_box, text='Отправить письмо\nс файлом', command=send_files, height=2, width=13, align='right')
 send_extra_button.text_size=9
 send_extra_button.bg='#FCFCFC'
 # Менюбар -------------------------------------------------------
