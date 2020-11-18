@@ -119,7 +119,7 @@ def docs():
 def thanks():
     thanks_window.show()
 # Основное -----------------------------------------------------
-app = App("Email Sender, v1.0.3", height=300, width=337)
+app = App('Email Sender, v1.0.4', height=300, width=337)
 app.bg='#FDFDFD'
 # Боксы для корректной отрисовки -------------------------------
 title_box = Box(app, layout='grid', align='top', width='fill')
@@ -199,10 +199,10 @@ send_extra_button.font='Open Sans'
 send_extra_button.bg='#FCFCFC'
 # Менюбар -------------------------------------------------------
 menubar = MenuBar(app,
-                  toplevel=["Файл", "Помощь"],
+                  toplevel=['Файл', 'Помощь'],
                   options=[
-                      [ ["Информация", info] ],
-                      [ ["Документация", docs], ['Благодарности', thanks] ]
+                      [ ['Информация', info] ],
+                      [ ['Документация', docs], ['Благодарности', thanks] ]
                   ])
 # Отрисовка ------------------------------------------------------
 app.display()
