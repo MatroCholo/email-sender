@@ -26,9 +26,9 @@ def send():
     if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
         _server = 'smtp.office365.com'
         _port = 587
-    #if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
-        #_server = 'smtp.mail.me.com'
-        #_port = 587
+    if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
+        _server = 'smtp.mail.me.com'
+        _port = 587
     msg = MIMEMultipart()
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
@@ -59,9 +59,9 @@ def send_files():
     if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
         _server = 'smtp.office365.com'
         _port = 587
-    #if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
-        #_server = 'smtp.mail.me.com'
-        #_port = 587
+    if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
+        _server = 'smtp.mail.me.com'
+        _port = 587
     msg = MIMEMultipart()
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
@@ -102,31 +102,15 @@ def send_files():
         app.info('Уведомление', 'Сообщение успешно доставлено')
     except:
         app.error('Уведомление', 'Сообщение не доставлено')
-# Для закрытия окон -------------------------------------------------------
-def close():
-    app.destroy()
-def docs_close():
-    docs_window.hide()
-def info_close():
-    info_window.hide()
-def thanks_close():
-    thanks_window.hide()
-# Для менюбара ---------------------------------------------------
-def info():
-    info_window.show()
-def docs():
-    docs_window.show()
-def thanks():
-    thanks_window.show()
 # Основное -----------------------------------------------------
-app = App('Email Sender, v1.0.4', height=300, width=337)
+app = App('Email Sender, v1.0.5', height=400, width=560)
 app.bg='#FDFDFD'
 # Боксы для корректной отрисовки -------------------------------
 title_box = Box(app, layout='grid', align='top', width='fill')
 main_box = Box(app, align='top', width='fill')
 name_box = Box(main_box, align='top', width='fill')
 button_box = Box(app, align='bottom', width='fill')
-# Боксы внутри уже существующих боксов, для точнейшей отрисовки-
+# Боксы внутри уже существующих боксов, для точнейшей отрисовки
 mail_box = Box(name_box, align='top', width='fill')
 pass_box = Box(name_box, align='top', width='fill')
 mail_to_box = Box(name_box, align='top', width='fill')
@@ -185,7 +169,7 @@ addr_to_box.bg = '#FBFBFB'
 subject_box = TextBox(sub_box, align='right', width=35)
 subject_box.bg = '#FBFBFB'
 # --------------------------------------------------------------
-message_box = TextBox(msg_box, align='right', width=35)
+message_box = TextBox(msg_box, align='right', width=30, height=10, multiline=True)
 message_box.bg='#FBFBFB'
 # Отправка без файлов -------------------------------------------
 send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
@@ -197,12 +181,5 @@ send_extra_button = PushButton(button_box, text='Отправить письмо
 send_extra_button.text_size=9
 send_extra_button.font='Open Sans'
 send_extra_button.bg='#FCFCFC'
-# Менюбар -------------------------------------------------------
-menubar = MenuBar(app,
-                  toplevel=['Файл', 'Помощь'],
-                  options=[
-                      [ ['Информация', info] ],
-                      [ ['Документация', docs], ['Благодарности', thanks] ]
-                  ])
 # Отрисовка ------------------------------------------------------
 app.display()
