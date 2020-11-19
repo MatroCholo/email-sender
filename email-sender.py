@@ -103,8 +103,7 @@ def send_files():
     except:
         app.error('Уведомление', 'Сообщение не доставлено')
 # Основное -----------------------------------------------------
-app = App('Email Sender, v1.0.5', height=400, width=560)
-app.bg='#FDFDFD'
+app = App('Email Sender, v1.0.6', height=400, width=560)
 # Боксы для корректной отрисовки -------------------------------
 title_box = Box(app, layout='grid', align='top', width='fill')
 main_box = Box(app, align='top', width='fill')
@@ -116,26 +115,8 @@ pass_box = Box(name_box, align='top', width='fill')
 mail_to_box = Box(name_box, align='top', width='fill')
 sub_box = Box(name_box, align='top', width='fill')
 msg_box = Box(name_box, align='top', width='fill')
-# Картинка с логотипом -----------------------------------------
-logo = Picture(title_box, image='logo.png', grid=[0,0])
-# Окна из менюбара ---------------------------------------------
-info_window = Window(app, 'Информация', layout='grid', height=145, width=270)
-info_window.bg='#FDFDFD'
-info_logo = Picture(info_window, image='info_logo.png', grid=[0,0])
-info_text = Text(info_window, '', grid=[0,1])
-info_window.hide()
-# --------------------------------------------------------------
-docs_window = Window(app, 'Документация', layout='grid', height=166, width=271)
-docs_window.bg='#FDFDFD'
-docs_logo = Picture(docs_window, image='docs.png', grid=[0,0])
-docs_text = Text(docs_window, '', grid=[0,1])
-docs_window.hide()
-# --------------------------------------------------------------
-thanks_window = Window(app, 'Благодарности', layout='grid', height=166, width=271)
-thanks_window.bg='#FDFDFD'
-thanks_logo = Picture(thanks_window, image='thanks.png', grid=[0,0])
-thanks_text = Text(thanks_window, '', grid=[0,1])
-thanks_window.hide()
+m2sg_box = Box(msg_box, align='top', width='fill')
+
 # Текст --------------------------------------------------------
 addr_from = Text(mail_box, 'Почта', align='left')
 addr_from.text_size=10
@@ -153,33 +134,26 @@ subject = Text(sub_box, 'Тема сообщения', align='left')
 subject.text_size=10
 subject.font='Open Sans'
 # --------------------------------------------------------------
-message = Text(msg_box, 'Текст сообщения', align='left')
+message = Text(m2sg_box, 'Текст сообщения', align='left')
 message.text_size=10
 message.font='Open Sans'
 # Формы для ввода текста ---------------------------------------
-addr_from_box = TextBox(mail_box, align='right', width=35)
-addr_from_box.bg = '#FBFBFB'
+addr_from_box = TextBox(mail_box, align='right', width=40)
 # --------------------------------------------------------------
-password_box = TextBox(pass_box, align='right', width=35)
-password_box.bg = '#FBFBFB'
+password_box = TextBox(pass_box, align='right', width=40)
 # --------------------------------------------------------------
-addr_to_box = TextBox(mail_to_box, align='right', width=35)
-addr_to_box.bg = '#FBFBFB'
+addr_to_box = TextBox(mail_to_box, align='right', width=40)
 # --------------------------------------------------------------
-subject_box = TextBox(sub_box, align='right', width=35)
-subject_box.bg = '#FBFBFB'
+subject_box = TextBox(sub_box, align='right', width=40)
 # --------------------------------------------------------------
-message_box = TextBox(msg_box, align='right', width=30, height=10, multiline=True)
-message_box.bg='#FBFBFB'
+message_box = TextBox(msg_box,  align='top', width=69, height=10, multiline=True)
 # Отправка без файлов -------------------------------------------
 send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
 send_button.text_size=10
 send_button.font='Open Sans'
-send_button.bg='#FCFCFC'
 # Отправка с файлами --------------------------------------------
 send_extra_button = PushButton(button_box, text='Отправить письмо\nс файлом', command=send_files, height=2, width=13, align='right')
 send_extra_button.text_size=9
 send_extra_button.font='Open Sans'
-send_extra_button.bg='#FCFCFC'
 # Отрисовка ------------------------------------------------------
 app.display()
