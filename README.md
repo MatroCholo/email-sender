@@ -21,7 +21,7 @@
 - По желанию можно скомпилировать **.py файл в .exe**, используя **pyinstaller**
 
 **Linux:**
-- apt **install python git**
+- sudo apt **install python python3 git**
 - git clone **https://github.com/MatroCholo/email-sender**
 - cd **email-sender/**
 - python **email-sender.py**
