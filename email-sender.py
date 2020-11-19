@@ -1,7 +1,11 @@
-# Необходимые библиотеки -------------------------------------
-from guizero import App, Box, MenuBar, Picture, PushButton, Text, TextBox, Window
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+from tkinter.ttk import Checkbutton
+from tkinter.ttk import Progressbar
+from tkinter.ttk import Frame
 import smtplib
-import os
+import webbrowser
 import mimetypes
 from email import encoders
 from email.mime.base import MIMEBase
@@ -9,14 +13,17 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.audio import MIMEAudio
 from email.mime.multipart import MIMEMultipart
-# Функции -----------------------------------------------------
+def setup(event):
+    webbrowser.open_new(r"https://www.google.com/settings/security/lesssecureapps")
 def send():
-    app.info('Уведомление', 'Убедитесь, что вы верно ввели данные')
-    addr_from = addr_from_box.value
-    password = password_box.value
-    addr_to = addr_to_box.value
-    subject = subject_box.value
-    message = message_box.value
+    bar['value'] = 0
+    messagebox.showinfo('Уведомление', 'Убедитесь, что вы верно ввели данные')
+    addr_from = mail.get()
+    addr_to = mail_to.get()
+    sub = subject.get()
+    passwd = password.get()
+    message = message_form.get('1.0', 'end')
+    bar['value'] = 25
     if addr_from[-9:] == 'gmail.com':
         _server = 'smtp.gmail.com'
         _port = 587
@@ -32,128 +39,59 @@ def send():
     msg = MIMEMultipart()
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
-    msg['Subject'] = subject                       
+    msg['Subject'] = sub                      
     try:
+        bar['value'] = 50
         msg.attach(MIMEText(message, 'plain'))
         server = smtplib.SMTP(_server, _port)
         server.starttls()
-        server.login(addr_from, password)
+        server.login(addr_from, passwd)
         server.send_message(msg)
+        bar['value'] = 75
         server.quit()
-        app.info('Уведомление', 'Сообщение успешно доставлено')
+        bar['value'] = 100
+        messagebox.showinfo('Уведомление', 'Сообщение успешно доставлено')
     except:
-        app.error('Ошибка', 'Сообщение не доставлено')
-def send_files():
-    app.info('Уведомление', 'Убедитесь, что вы верно ввели данные')
-    addr_from = addr_from_box.value
-    password = password_box.value
-    addr_to = addr_to_box.value
-    subject = subject_box.value
-    message = message_box.value
-    if addr_from[-9:] == 'gmail.com':
-        _server = 'smtp.gmail.com'
-        _port = 587
-    if addr_from[-7:] == 'mail.ru' or addr_from[-5:] == 'bk.ru' or addr_from[-8:] == 'inbox.ru' or addr_from[-7:] == 'list.ru':
-        _server = 'smtp.mail.ru'
-        _port = 25
-    if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
-        _server = 'smtp.office365.com'
-        _port = 587
-    if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
-        _server = 'smtp.mail.me.com'
-        _port = 587
-    msg = MIMEMultipart()
-    msg['From']    = addr_from                          
-    msg['To']      = addr_to                            
-    msg['Subject'] = subject                       
-    try:
-        filepath = app.select_file(title="Выберите файл", folder=".", filetypes=[["All files", ".*"]], save=False)
-        filename = os.path.basename(filepath)
-        ctype, encoding = mimetypes.guess_type(filepath)
-        if ctype is None or encoding is not None:
-            ctype = 'application/octet-stream'
-        maintype, subtype = ctype.split('/', 1)
-        if maintype == 'text':
-            with open(filepath) as fp:
-                file = MIMEText(fp.read(), _subtype=subtype)
-                fp.close()
-        elif maintype == 'image':
-            with open(filepath, 'rb') as fp:
-                file = MIMEImage(fp.read(), _subtype=subtype)
-                fp.close()
-        elif maintype == 'audio':
-            with open(filepath, 'rb') as fp:
-                file = MIMEAudio(fp.read(), _subtype=subtype)
-                fp.close()
-        else:
-            with open(filepath, 'rb') as fp:
-                file = MIMEBase(maintype, subtype)
-                file.set_payload(fp.read())
-                fp.close()
-                encoders.encode_base64(file)
-        file.add_header('Content-Disposition', 'attachment', filename=filename)
-        msg.attach(file)
-        msg.attach(MIMEText(message, 'plain'))
-        server = smtplib.SMTP(_server, _port)
-        server.starttls()
-        server.login(addr_from, password)
-        server.send_message(msg)
-        server.quit()
-        app.info('Уведомление', 'Сообщение успешно доставлено')
-    except:
-        app.error('Уведомление', 'Сообщение не доставлено')
-# Основное -----------------------------------------------------
-app = App('Email Sender, v1.0.6', height=400, width=560)
-# Боксы для корректной отрисовки -------------------------------
-title_box = Box(app, layout='grid', align='top', width='fill')
-main_box = Box(app, align='top', width='fill')
-name_box = Box(main_box, align='top', width='fill')
-button_box = Box(app, align='bottom', width='fill')
-# Боксы внутри уже существующих боксов, для точнейшей отрисовки
-mail_box = Box(name_box, align='top', width='fill')
-pass_box = Box(name_box, align='top', width='fill')
-mail_to_box = Box(name_box, align='top', width='fill')
-sub_box = Box(name_box, align='top', width='fill')
-msg_box = Box(name_box, align='top', width='fill')
-m2sg_box = Box(msg_box, align='top', width='fill')
-
-# Текст --------------------------------------------------------
-addr_from = Text(mail_box, 'Почта', align='left')
-addr_from.text_size=10
-addr_from.font='Open Sans'
-# --------------------------------------------------------------
-password = Text(pass_box, 'Пароль', align='left')
-password.text_size=10
-password.font='Open Sans'
-# --------------------------------------------------------------
-addr_to = Text(mail_to_box, 'Почта получателя', align='left')
-addr_to.text_size=10
-addr_to.font='Open Sans'
-# --------------------------------------------------------------
-subject = Text(sub_box, 'Тема сообщения', align='left')
-subject.text_size=10
-subject.font='Open Sans'
-# --------------------------------------------------------------
-message = Text(m2sg_box, 'Текст сообщения', align='left')
-message.text_size=10
-message.font='Open Sans'
-# Формы для ввода текста ---------------------------------------
-addr_from_box = TextBox(mail_box, align='right', width=40)
-# --------------------------------------------------------------
-password_box = TextBox(pass_box, align='right', width=40)
-# --------------------------------------------------------------
-addr_to_box = TextBox(mail_to_box, align='right', width=40)
-# --------------------------------------------------------------
-subject_box = TextBox(sub_box, align='right', width=40)
-# --------------------------------------------------------------
-message_box = TextBox(msg_box,  align='top', width=69, height=10, multiline=True)
-# Отправка без файлов -------------------------------------------
-send_button = PushButton(button_box, text='Отправить\nписьмо', command=send, height=2, width=10, align='left')
-send_button.text_size=10
-send_button.font='Open Sans'
-# Отправка с файлами --------------------------------------------
-send_extra_button = PushButton(button_box, text='Отправить письмо\nс файлом', command=send_files, height=2, width=13, align='right')
-send_extra_button.text_size=9
-send_extra_button.font='Open Sans'
-# Отрисовка ------------------------------------------------------
-app.display()
+        bar['value'] = 75
+        messagebox.showerror('Ошибка', 'Сообщение не доставлено')
+        bar['value'] = 0
+app = Tk()
+app.title('Email Sender, v1.1')
+app.resizable(height=False, width=False)
+mail = StringVar()
+password = StringVar()
+mail_to = StringVar()
+subject = StringVar()
+message_form = StringVar()
+mainframe = Frame(app, padding="3 3 12 12")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0, weight=1)
+ttk.Label(mainframe, text="Почта: ").grid(column=0, row=1, sticky=W)
+mail_form = ttk.Entry(mainframe, width=30, textvariable=mail)
+mail_form.grid(column=4, row=1, sticky=(W, E))
+ttk.Label(mainframe, text="Пароль: ").grid(column=0, row=2, sticky=W)
+password_form = ttk.Entry(mainframe, show="*", width=30, textvariable=password)
+password_form.grid(column=4, row=2, sticky=(W, E))
+ttk.Label(mainframe, text="Почта получателя: ").grid(column=0, row=3, sticky=W)
+mail_to_form = ttk.Entry(mainframe, width=30, textvariable=mail_to)
+mail_to_form.grid(column=4, row=3, sticky=(W, E))
+ttk.Label(mainframe, text="Тема сообщения: ").grid(column=0, row=6, sticky=W)
+subject_form = ttk.Entry(mainframe, width=30, textvariable=subject)
+subject_form.grid(column=4, row=6, sticky=(W, E))
+ttk.Label(mainframe, text="Текст сообщения: ").grid(column=0, row=7, sticky=W)
+message_form = Text(mainframe, width=30, height=10)
+message_form.grid(column=4, row=7, sticky=(W, E))
+send_button = ttk.Button(mainframe, text="Отправить", command=send)
+send_button.grid(column=4,row=9,sticky=E)
+chk_state = BooleanVar()  
+chk_state.set(False)
+send_extra = Checkbutton(mainframe, text='Добавить файл', var=chk_state)
+send_extra.grid(column=4, row=8, sticky=E)  
+bar = Progressbar(mainframe, length=150)
+bar['value'] = 0
+bar_text = ttk.Label(mainframe, text='Статус отправки: ')
+bar_text.grid(column=0, row=8, sticky=W)  
+bar.grid(column=0, row=9, sticky=W)  
+for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+app.mainloop()
