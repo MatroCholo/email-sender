@@ -1,4 +1,4 @@
-<h1 align="center">Email-Sender, v1.0.6</h1>
+<h1 align="center">Email-Sender, v1.1</h1>
 <h4 align="center">Email-Sender - это программа, позволяющая отправлять сообщения по электронной почте без необходимости запускать web-версию или сторонний клиент, потребляя минимальное количество ресурсов.</h4>
 
 ## Предупреждения:
@@ -11,23 +11,20 @@
 - Поддерживаются **Google Mail, Microsoft Mail, Mail.ru и Apple iCloud**.
 - Программа проста в использовании.
 - Возможность отправки **любых файлов**.
-- Начиная с **v1.0.3** используется шрифт **Open Sans**. Для корректной отрисовки необходимо его **наличие в системе**. В противном случае будет использоваться **системный шрифт**.
-
+- С версии **v1.1** перестала использоваться библиотека **GuiZero** и сторонний шрифт **Open Sans**.
 ## Использование:
 
 **Windows\MacOS:**
 - Скачать **Python 3.x**.
 - Скачать архив и распаковать
-- В cmd.exe вписать **pip install guizero**
-- Запустить **email-sender-gui.py**
+- Запустить **email-sender.py**
 - По желанию можно скомпилировать **.py файл в .exe**, используя **pyinstaller**
 
 **Linux:**
 - apt **install python git**
-- git clone **https://github.com/MatroCholo/email-sender-gui**
-- **pip install guizero**
-- cd **email-sender-gui/**
-- python **email-sender-gui.py**
+- git clone **https://github.com/MatroCholo/email-sender**
+- cd **email-sender/**
+- python **email-sender.py**
 
 ## Как со мной связаться?:
 - **Telegram: https://t.me/MatroCholo**
