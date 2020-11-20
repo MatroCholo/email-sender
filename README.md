@@ -21,12 +21,10 @@
 - По желанию можно упаковать **.py-файл в .exe**, используя **pyinstaller**
 
 **Linux:**
-```
-sudo apt install python python3 git
-git clone https://github.com/MatroCholo/email-sender
-cd email-sender/
-python email-sender.py
-```
+- sudo apt install **python python3 git**
+- git clone **https://github.com/MatroCholo/email-sender**
+- cd **email-sender/**
+- python **email-sender.py**
 ## Как со мной связаться?:
 - **Telegram: https://t.me/MatroCholo**
 - **ВК: https://vk.com/matrocholo**
