@@ -15,16 +15,16 @@
 ## Использование:
 
 **Windows\MacOS:**
-> - Скачать **Python 3.x**.
-> - Скачать архив и распаковать
-> - Запустить **email-sender.py**
-> - По желанию можно упаковать **.py-файл в .exe**, используя **pyinstaller**
+- Скачать **Python 3.x**.
+- Скачать архив и распаковать
+- Запустить **email-sender.py**
+- По желанию можно упаковать **.py-файл в .exe**, используя **pyinstaller**
 
 **Linux:**
-> - sudo apt **install python python3 git**
-> - git clone **https://github.com/MatroCholo/email-sender**
-> - cd **email-sender/**
-> - python **email-sender.py**
+- sudo apt **install python python3 git**
+- git clone **https://github.com/MatroCholo/email-sender**
+ - cd **email-sender/**
+- python **email-sender.py**
 
 ## Как со мной связаться?:
 - **Telegram: https://t.me/MatroCholo**
