@@ -1,3 +1,4 @@
+# Необходимые библиотеки -------------------------------------------------
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -6,6 +7,7 @@ from tkinter.ttk import Checkbutton
 from tkinter.ttk import Progressbar
 from tkinter.ttk import Frame
 import smtplib
+from tkinter import Menu
 import os
 from os import path
 import mimetypes
@@ -15,6 +17,7 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.audio import MIMEAudio
 from email.mime.multipart import MIMEMultipart
+# Функции -----------------------------------------------------------------
 def add_files():
     global filepath
     filepath = filedialog.askopenfile("r", initialdir= path.dirname(__file__))
@@ -96,43 +99,56 @@ def send():
         except:
             bar['value'] = 0
             messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+# Основное ----------------------------------------------------------------
 app = Tk()
 app.title('Email Sender, v1.1.1')
 app.geometry('471x400')
 app.resizable(height=False, width=False)
+# Переменные --------------------------------------------------------------
 mail = StringVar()
 password = StringVar()
 mail_to = StringVar()
 subject = StringVar()
 message_form = StringVar()
+# Геометрия окна ----------------------------------------------------------
 mainframe = Frame(app, padding="3 3 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 mainframe.columnconfigure(0, weight=1)
 mainframe.rowconfigure(0, weight=1)
+# Текст -------------------------------------------------------------------
 ttk.Label(mainframe, text="Почта: ").grid(column=0, row=1, sticky=W)
+ttk.Label(mainframe, text="Пароль: ").grid(column=0, row=2, sticky=W)
+ttk.Label(mainframe, text="Почта получателя: ").grid(column=0, row=3, sticky=W)
+ttk.Label(mainframe, text="Тема сообщения: ").grid(column=0, row=6, sticky=W)
+ttk.Label(mainframe, text="Текст сообщения: ").grid(column=0, row=7, sticky=W)
+# Текстовые формы ---------------------------------------------------------
 mail_form = ttk.Entry(mainframe, width=30, textvariable=mail)
 mail_form.grid(column=4, row=1, sticky=(W, E))
-ttk.Label(mainframe, text="Пароль: ").grid(column=0, row=2, sticky=W)
+# -------------------------------------------------------------------------
 password_form = ttk.Entry(mainframe, show="*", width=30, textvariable=password)
 password_form.grid(column=4, row=2, sticky=(W, E))
-ttk.Label(mainframe, text="Почта получателя: ").grid(column=0, row=3, sticky=W)
+# -------------------------------------------------------------------------
 mail_to_form = ttk.Entry(mainframe, width=30, textvariable=mail_to)
 mail_to_form.grid(column=4, row=3, sticky=(W, E))
-ttk.Label(mainframe, text="Тема сообщения: ").grid(column=0, row=6, sticky=W)
+# -------------------------------------------------------------------------
 subject_form = ttk.Entry(mainframe, width=30, textvariable=subject)
 subject_form.grid(column=4, row=6, sticky=(W, E))
-ttk.Label(mainframe, text="Текст сообщения: ").grid(column=0, row=7, sticky=W)
+# -------------------------------------------------------------------------
 message_form = Text(mainframe, width=30, height=10)
 message_form.grid(column=4, row=7, sticky=(W, E))
+# -------------------------------------------------------------------------
 send_button = ttk.Button(mainframe, text="Отправить", command=send)
 send_button.grid(column=4,row=10,sticky=E)
+# -------------------------------------------------------------------------
 add_file_button = ttk.Button(mainframe, text='Прикрепить', command=add_files)
 add_file_button.grid(column=0,row=10,sticky=W)
+# Прогресс-бар ------------------------------------------------------------
 bar = Progressbar(mainframe, length=200)
 bar['value'] = 0
 bar_text = ttk.Label(mainframe, text='Статус отправки: ')
 bar_text.grid(column=0, row=8, sticky=W)  
-bar.grid(column=0, row=9, sticky=W)  
+bar.grid(column=0, row=9, sticky=W)
+# Отрисовка ---------------------------------------------------------------
 for child in mainframe.winfo_children():
     child.grid_configure(padx=5, pady=5)
 app.mainloop()
