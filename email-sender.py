@@ -1,13 +1,8 @@
 # Необходимые библиотеки -------------------------------------------------
 from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-from tkinter import filedialog
-from tkinter.ttk import Checkbutton
-from tkinter.ttk import Progressbar
-from tkinter.ttk import Frame
+from tkinter import messagebox, filedialog, ttk, Menu
+from tkinter.ttk import Checkbutton, Frame, Progressbar
 import smtplib
-from tkinter import Menu
 import os
 from os import path
 import mimetypes
@@ -24,7 +19,7 @@ def add_files():
     filepath = filepath.name
 def send():    
     bar['value'] = 0
-    messagebox.showinfo('Уведомление', 'Убедитесь, что вы верно ввели данные')
+    messagebox.showinfo('Уведомление', 'Убедитесь, что вы ввели данные верно')
     addr_from = mail.get()
     addr_to = mail_to.get()
     sub = subject.get()
@@ -101,7 +96,7 @@ def send():
             messagebox.showerror('Уведомление', 'Сообщение не отправлено')
 # Основное ----------------------------------------------------------------
 app = Tk()
-app.title('Email Sender, v1.1.1')
+app.title('Email Sender, v1.1.3')
 app.geometry('471x400')
 app.resizable(height=False, width=False)
 # Переменные --------------------------------------------------------------
