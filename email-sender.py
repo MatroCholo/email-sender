@@ -133,5 +133,6 @@ bar['value'] = 0
 bar_text = ttk.Label(mainframe, text='Статус отправки: ')
 bar_text.grid(column=0, row=8, sticky=W)  
 bar.grid(column=0, row=9, sticky=W)  
-for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+for child in mainframe.winfo_children():
+    child.grid_configure(padx=5, pady=5)
 app.mainloop()
