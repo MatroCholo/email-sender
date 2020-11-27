@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox, filedialog, ttk, Menu
 from tkinter.ttk import Checkbutton, Frame, Progressbar
 import smtplib
+from time import sleep
 import os
 from os import path
 import mimetypes
@@ -25,6 +26,7 @@ def send():
     sub = subject.get()
     passwd = password.get()
     message = message_form.get('1.0', 'end')
+    timer_ = delay.get()
     bar['value'] = 25
     if addr_from[-9:] == 'gmail.com':
         _server = 'smtp.gmail.com'
@@ -43,60 +45,118 @@ def send():
     msg['To']      = addr_to                            
     msg['Subject'] = sub
     bar['value'] = 50
-    if 'filepath' in globals():
-        try:
-            filename = os.path.basename(filepath)
-            ctype, encoding = mimetypes.guess_type(filepath)
-            if ctype is None or encoding is not None:
-                ctype = 'application/octet-stream'
-            maintype, subtype = ctype.split('/', 1)
-            if maintype == 'text':
-                with open(filepath) as fp:
-                    file = MIMEText(fp.read(), _subtype=subtype)
-                    fp.close()
-            elif maintype == 'image':
-                with open(filepath, 'rb') as fp:
-                    file = MIMEImage(fp.read(), _subtype=subtype)
-                    fp.close()
-            elif maintype == 'audio':
-                with open(filepath, 'rb') as fp:
-                    file = MIMEAudio(fp.read(), _subtype=subtype)
-                    fp.close()
-            else:
-                with open(filepath, 'rb') as fp:
-                    file = MIMEBase(maintype, subtype)
-                    file.set_payload(fp.read())
-                    fp.close()
-                    encoders.encode_base64(file)
-            file.add_header('Content-Disposition', 'attachment', filename=filename)
-            msg.attach(file)
-            msg.attach(MIMEText(message, 'plain'))
-            server = smtplib.SMTP(_server, _port)
-            bar['value'] = 75
-            server.starttls()
-            server.login(addr_from, passwd)
-            server.send_message(msg)
-            server.quit()
-            bar['value'] = 100
-            messagebox.showinfo('Уведомление', 'Сообщение отправлено')
-        except:
-            bar['value'] = 0
-            messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+    if timer_ == 0:
+        if 'filepath' in globals():
+            try:
+                filename = os.path.basename(filepath)
+                ctype, encoding = mimetypes.guess_type(filepath)
+                if ctype is None or encoding is not None:
+                    ctype = 'application/octet-stream'
+                maintype, subtype = ctype.split('/', 1)
+                if maintype == 'text':
+                    with open(filepath) as fp:
+                        file = MIMEText(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'image':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEImage(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'audio':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEAudio(fp.read(), _subtype=subtype)
+                        fp.close()
+                else:
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEBase(maintype, subtype)
+                        file.set_payload(fp.read())
+                        fp.close()
+                        encoders.encode_base64(file)
+                file.add_header('Content-Disposition', 'attachment', filename=filename)
+                msg.attach(file)
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                bar['value'] = 75
+                server.starttls()
+                server.login(addr_from, passwd)
+                server.send_message(msg)
+                server.quit()
+                bar['value'] = 100
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+            except:
+                bar['value'] = 0
+                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+        else:
+            try:
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                server.starttls()
+                server.login(addr_from, passwd)
+                sleep(timer_)
+                server.send_message(msg)
+                server.quit()
+                bar['value'] = 100
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+            except:
+                bar['value'] = 0
+                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
     else:
-        try:
-            msg.attach(MIMEText(message, 'plain'))
-            server = smtplib.SMTP(_server, _port)
-            server.starttls()
-            server.login(addr_from, passwd)
-            server.send_message(msg)
-            server.quit()
-            messagebox.showinfo('Уведомление', 'Сообщение отправлено')
-        except:
-            bar['value'] = 0
-            messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+        if 'filepath' in globals():
+            try:
+                filename = os.path.basename(filepath)
+                ctype, encoding = mimetypes.guess_type(filepath)
+                if ctype is None or encoding is not None:
+                    ctype = 'application/octet-stream'
+                maintype, subtype = ctype.split('/', 1)
+                if maintype == 'text':
+                    with open(filepath) as fp:
+                        file = MIMEText(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'image':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEImage(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'audio':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEAudio(fp.read(), _subtype=subtype)
+                        fp.close()
+                else:
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEBase(maintype, subtype)
+                        file.set_payload(fp.read())
+                        fp.close()
+                        encoders.encode_base64(file)
+                file.add_header('Content-Disposition', 'attachment', filename=filename)
+                msg.attach(file)
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                bar['value'] = 75
+                server.starttls()
+                server.login(addr_from, passwd)
+                sleep(timer_)
+                server.send_message(msg)
+                server.quit()
+                bar['value'] = 100
+                messagebox.showinfo('Уведомление', 'Сообщение будет отправлено через', time_, 'минут(ы, у)')
+            except:
+                bar['value'] = 0
+                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+        else:
+            try:
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                server.starttls()
+                server.login(addr_from, passwd)
+                sleep(timer_)
+                server.send_message(msg)
+                server.quit()
+                bar['value'] = 100
+                messagebox.showinfo('Уведомление', 'Сообщение будет отправлено через', time_, 'минут(ы, у)')
+            except:
+                bar['value'] = 0
+                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
 # Основное ----------------------------------------------------------------
 app = Tk()
-app.title('Email Sender, v1.1.3')
+app.title('Email Sender, v1.2')
 app.geometry('471x400')
 app.resizable(height=False, width=False)
 # Переменные --------------------------------------------------------------
@@ -105,6 +165,7 @@ password = StringVar()
 mail_to = StringVar()
 subject = StringVar()
 message_form = StringVar()
+delay = IntVar()
 # Геометрия окна ----------------------------------------------------------
 mainframe = Frame(app, padding="3 3 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -137,6 +198,10 @@ send_button.grid(column=4,row=10,sticky=E)
 # -------------------------------------------------------------------------
 add_file_button = ttk.Button(mainframe, text='Прикрепить', command=add_files)
 add_file_button.grid(column=0,row=10,sticky=W)
+# Скролл-лист -------------------------------------------------------------
+timer = Spinbox(mainframe, from_=0, to=36000, width=15, textvariable=delay)
+timer.grid(column=4, row=9, sticky=E)
+ttk.Label(mainframe, text="Таймер (сек): ").grid(column=4, row=8, sticky=E)
 # Прогресс-бар ------------------------------------------------------------
 bar = Progressbar(mainframe, length=200)
 bar['value'] = 0
