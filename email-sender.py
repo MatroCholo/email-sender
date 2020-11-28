@@ -48,7 +48,7 @@ def mainWindow():
     loginwindow.mainloop()
 def secondWindow():
     # Предупреждение ----------------------------------------------------------
-    messagebox.showinfo('[Предупреждение]', 'Убедитесь, что вы ввели верные данные')
+    messagebox.showwarning('[Предупреждение]', 'Убедитесь, что вы ввели верные данные')
     # Закрытие логин-окна -----------------------------------------------------
     loginwindow.destroy()
     # Глобализируем переменные ------------------------------------------------
@@ -179,10 +179,10 @@ def send():
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
             except:
                 bar['value'] = 0
-                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
         else:
             try:
                 msg.attach(MIMEText(message, 'plain'))
@@ -192,10 +192,10 @@ def send():
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
             except:
                 bar['value'] = 0
-                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
     else:
         if 'filepath' in globals():
             try:
@@ -229,28 +229,28 @@ def send():
                 bar['value'] = 75
                 server.starttls()
                 server.login(addr_from, passwd)
-                messagebox.showinfo('Уведомление', 'Сообщение будет отправлено')
                 sleep(time)
+                messagebox.showinfo('[Уведомление]', 'Сообщение будет отправлено')
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
             except:
                 bar['value'] = 0
-                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
         else:
             try:
                 msg.attach(MIMEText(message, 'plain'))
                 server = smtplib.SMTP(_server, _port)
                 server.starttls()
                 server.login(addr_from, passwd)
-                messagebox.showinfo('Уведомление', 'Сообщение будет отправлено')
                 sleep(time)
+                messagebox.showinfo('[Уведомление]', 'Сообщение будет отправлено')
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
             except:
                 bar['value'] = 0
-                messagebox.showerror('Уведомление', 'Сообщение не отправлено')
+                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
 if __name__ == '__main__':
     mainWindow()
