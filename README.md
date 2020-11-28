@@ -17,12 +17,12 @@
 ## Использование:
 
 **Windows\MacOS:**
-- Скачать **Python 3.x**.
-- Скачать архив и распаковать
-- Запустить **email-sender.py**
+- Установите **Python 3.x**.
+- Скачайте архив с **Email Sender** по **[ссылке](https://github.com/MatroCholo/email-sender)**
+- Запустите **email-sender.py**
 
 **Linux:**
-- sudo apt install **python python3 git**
+- Установите **Python 3.x** и **систему контроля версий Git** в соответствии с вашим дистрибутивом,
 - git clone **https://github.com/MatroCholo/email-sender**
 - cd **email-sender/**
 - python **email-sender.py**
