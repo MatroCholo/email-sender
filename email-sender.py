@@ -156,7 +156,7 @@ def send():
                 messagebox.showerror('Уведомление', 'Сообщение не отправлено')
 # Основное ----------------------------------------------------------------
 app = Tk()
-app.title('Email Sender, v1.2')
+app.title('Email Sender, v1.1.4')
 app.geometry('471x400')
 app.resizable(height=False, width=False)
 # Переменные --------------------------------------------------------------
