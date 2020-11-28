@@ -141,116 +141,73 @@ def send():
     msg['To']      = addr_to                            
     msg['Subject'] = sub
     bar['value'] = 50
-    # Проверка наличия таймера --------------------------------------------------
-    if time == 0:
-        # Проверка наличия выбора файлов ----------------------------------------
-        if 'filepath' in globals():
-            try:
-                filename = os.path.basename(filepath)
-                ctype, encoding = mimetypes.guess_type(filepath)
-                if ctype is None or encoding is not None:
-                    ctype = 'application/octet-stream'
-                maintype, subtype = ctype.split('/', 1)
-                if maintype == 'text':
-                    with open(filepath) as fp:
-                        file = MIMEText(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'image':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEImage(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'audio':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEAudio(fp.read(), _subtype=subtype)
-                        fp.close()
-                else:
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEBase(maintype, subtype)
-                        file.set_payload(fp.read())
-                        fp.close()
-                        encoders.encode_base64(file)
-                file.add_header('Content-Disposition', 'attachment', filename=filename)
-                msg.attach(file)
-                msg.attach(MIMEText(message, 'plain'))
-                server = smtplib.SMTP(_server, _port)
-                bar['value'] = 75
-                server.starttls()
-                server.login(addr_from, passwd)
+    # Проверка наличия выбора файлов ----------------------------------------
+    if 'filepath' in globals():
+        try:
+            filename = os.path.basename(filepath)
+            ctype, encoding = mimetypes.guess_type(filepath)
+            if ctype is None or encoding is not None:
+                ctype = 'application/octet-stream'
+            maintype, subtype = ctype.split('/', 1)
+            if maintype == 'text':
+                with open(filepath) as fp:
+                    file = MIMEText(fp.read(), _subtype=subtype)
+                    fp.close()
+            elif maintype == 'image':
+                with open(filepath, 'rb') as fp:
+                    file = MIMEImage(fp.read(), _subtype=subtype)
+                    fp.close()
+            elif maintype == 'audio':
+                with open(filepath, 'rb') as fp:
+                    file = MIMEAudio(fp.read(), _subtype=subtype)
+                    fp.close()
+            else:
+                with open(filepath, 'rb') as fp:
+                    file = MIMEBase(maintype, subtype)
+                    file.set_payload(fp.read())
+                    fp.close()
+                    encoders.encode_base64(file)
+            file.add_header('Content-Disposition', 'attachment', filename=filename)
+            msg.attach(file)
+            msg.attach(MIMEText(message, 'plain'))
+            server = smtplib.SMTP(_server, _port)
+            bar['value'] = 75
+            server.starttls()
+            server.login(addr_from, passwd)
+            if time == 0:
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
                 messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
-            except:
-                bar['value'] = 0
-                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
-        else:
-            try:
-                msg.attach(MIMEText(message, 'plain'))
-                server = smtplib.SMTP(_server, _port)
-                server.starttls()
-                server.login(addr_from, passwd)
+            else:
+                sleep(time)
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
                 messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
-            except:
-                bar['value'] = 0
-                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
+        except:
+            bar['value'] = 0
+            messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
     else:
-        if 'filepath' in globals():
-            try:
-                filename = os.path.basename(filepath)
-                ctype, encoding = mimetypes.guess_type(filepath)
-                if ctype is None or encoding is not None:
-                    ctype = 'application/octet-stream'
-                maintype, subtype = ctype.split('/', 1)
-                if maintype == 'text':
-                    with open(filepath) as fp:
-                        file = MIMEText(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'image':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEImage(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'audio':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEAudio(fp.read(), _subtype=subtype)
-                        fp.close()
-                else:
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEBase(maintype, subtype)
-                        file.set_payload(fp.read())
-                        fp.close()
-                        encoders.encode_base64(file)
-                file.add_header('Content-Disposition', 'attachment', filename=filename)
-                msg.attach(file)
-                msg.attach(MIMEText(message, 'plain'))
-                server = smtplib.SMTP(_server, _port)
-                bar['value'] = 75
-                server.starttls()
-                server.login(addr_from, passwd)
-                sleep(time)
-                messagebox.showinfo('[Уведомление]', 'Сообщение будет отправлено')
+        try:
+            msg.attach(MIMEText(message, 'plain'))
+            server = smtplib.SMTP(_server, _port)
+            server.starttls()
+            server.login(addr_from, passwd)
+            if time == 0:
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-            except:
-                bar['value'] = 0
-                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
-        else:
-            try:
-                msg.attach(MIMEText(message, 'plain'))
-                server = smtplib.SMTP(_server, _port)
-                server.starttls()
-                server.login(addr_from, passwd)
+                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+            else:
                 sleep(time)
-                messagebox.showinfo('[Уведомление]', 'Сообщение будет отправлено')
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-            except:
-                bar['value'] = 0
-                messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
+                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+        except:
+            bar['value'] = 0
+            messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
 if __name__ == '__main__':
     mainWindow()
