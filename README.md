@@ -1,4 +1,4 @@
-<h1 align="center">Email-Sender, v1.2.1</h1>
+<h1 align="center">Email-Sender, v1.2.2</h1>
 <h4 align="center">Email-Sender - это программа, потреблющая минимальное количество ресурсов и позволяющая отправлять сообщения по электронной почте без необходимости открывать web-версию или запускать сторонний клиент.</h4>
 
 ## Предупреждения:
@@ -26,3 +26,11 @@
 - git clone **https://github.com/MatroCholo/email-sender**
 - cd **email-sender/**
 - python **email-sender.py**
+
+## Поддерживаемые версии
+
+| Версия  | Поддержка          |
+| ------- | ------------------ |
+| v1.2.2  | :white_check_mark: |
+| v1.2.1  | :white_check_mark: |
+| < v1.2  | :x:                |
