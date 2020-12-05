@@ -22,7 +22,7 @@ def mainWindow():
     global password
     # Основное ------------------------------------------------------------
     loginwindow = Tk()
-    loginwindow.title('[Авторизация]')
+    loginwindow.title('Авторизация')
     loginwindow.geometry('265x100')
     loginwindow.resizable(height = False, width = False)
     # Переменные ----------------------------------------------------------
@@ -48,7 +48,7 @@ def mainWindow():
     loginwindow.mainloop()
 def secondWindow():
     # Предупреждение ----------------------------------------------------------
-    messagebox.showwarning('[Предупреждение]', 'Убедитесь, что вы ввели верные данные')
+    messagebox.showwarning('Предупреждение', 'Убедитесь, что вы ввели верные данные')
     # Закрытие логин-окна -----------------------------------------------------
     loginwindow.destroy()
     # Глобализируем переменные ------------------------------------------------
@@ -59,7 +59,7 @@ def secondWindow():
     global delay
     # Основное ----------------------------------------------------------------
     app = Tk()
-    app.title('Email Sender [v1.2.1]')
+    app.title('Email Sender [v1.2.2]')
     app.geometry('510x340')
     app.resizable(height = False, width = False)
     # Переменные -------------------------------------------------------------- 
@@ -178,16 +178,16 @@ def send():
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
             else:
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
         except:
             bar['value'] = 0
-            messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
+            messagebox.showerror('Ошибка', 'Сообщение не отправлено')
     else:
         try:
             msg.attach(MIMEText(message, 'plain'))
@@ -198,13 +198,13 @@ def send():
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
             else:
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
                 bar['value'] = 100
-                messagebox.showinfo('[Уведомление]', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
         except:
             bar['value'] = 0
             messagebox.showerror('[Ошибка]', 'Сообщение не отправлено')
