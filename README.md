@@ -18,7 +18,7 @@
 
 **Windows\MacOS:**
 - Установите **Python 3.x**.
-- Скачайте архив с **Email Sender** по **[ссылке](https://github.com/MatroCholo/email-sender)**
+- Скачайте **.exe-файл** по **[ссылке](https://github.com/MatroCholo/email-sender/releases)**
 - Запустите **email-sender.py**
 
 **Linux:**
