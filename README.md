@@ -26,6 +26,3 @@
 - git clone **https://github.com/MatroCholo/email-sender**
 - cd **email-sender/**
 - python **email-sender.py**
-
-## Обратная связь:
-- **ВК: https://vk.com/matrocholo**
