@@ -29,7 +29,8 @@
 ## Ручная конвертация .py в .exe:
 - Нажмите **Windows + R**, введите **cmd** и нажмите **Enter**,
 - В открывшемся окне введите **pip install pyinstaller**,
-- После установки введите **pyinstaller C:\Directory\file.py --onefile --noconsoled --icon C:\Directory\file.icon**, где
+- После установки введите:
+**pyinstaller C:\Directory\file.py --onefile --noconsoled --icon C:\Directory\file.icon**, где
 - - **pyinstaller** - **команда конвертирования**,
 - - **C:\Directory\file.py** - **путь к файлу с расширением .py**,
 - - **--onefile** - **конвертация в один файл**,
