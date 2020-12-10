@@ -50,13 +50,12 @@ def mainWindow():
         child.grid_configure(padx = 5, pady = 5)
     loginwindow.mainloop()
 def secondWindow():
-    # Закрытие логин-окна -----------------------------------------------------
+    # Закрытие окна авторизации -----------------------------------------------
     loginwindow.destroy()
     # Глобализируем переменные ------------------------------------------------
     global mail_to
     global subject
     global message_form
-    global bar
     global delay
     # Основное ----------------------------------------------------------------
     app = Tk()
