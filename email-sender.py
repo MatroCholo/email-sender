@@ -1,13 +1,14 @@
 # Необходимые библиотеки -------------------------------------------------
+import webbrowser
+import smtplib
+import mimetypes
+import os
+# ------------------------------------------------------------------------
+from os import path
 from time import sleep
 from tkinter import *
-from tkinter import messagebox, filedialog, ttk, Menu
-from tkinter.ttk import Checkbutton, Frame, Progressbar
-import os
-from os import path
-import smtplib
-# ------------------------------------------------------------------------
-import mimetypes
+from tkinter import messagebox, filedialog, ttk
+from tkinter.ttk import Checkbutton, Frame
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
@@ -23,7 +24,7 @@ def mainWindow():
     # Основное ------------------------------------------------------------
     loginwindow = Tk()
     loginwindow.title('Авторизация')
-    loginwindow.geometry('265x100')
+    loginwindow.geometry('298x130')
     loginwindow.resizable(height = False, width = False)
     # Переменные ----------------------------------------------------------
     mail = StringVar()
@@ -36,19 +37,19 @@ def mainWindow():
     # Текст ---------------------------------------------------------------
     ttk.Label(mainframe, text = 'Почта:').grid(column = 0, row = 0, sticky = W)
     ttk.Label(mainframe, text = 'Пароль:').grid(column = 0, row = 1, sticky = W)
+    ttk.Label(mainframe, text = '').grid(column = 0, row = 2, sticky = W)
+    ttk.Label(mainframe, text = '').grid(column = 1, row = 2, sticky = E)
     # Текстовые формы -----------------------------------------------------
     mail_form = ttk.Entry(mainframe, width = 30, textvariable = mail).grid(column = 1, row = 0, sticky = (W, E))
-    # ---------------------------------------------------------------------
-    password_form = ttk.Entry(mainframe, show='*', width = 30, textvariable = password).grid(column = 1, row = 1, sticky = (W, E))
-    # Функции -------------------------------------------------------------
-    login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 2,sticky = E)
+    password_form = ttk.Entry(mainframe, width = 30, show = '*', textvariable = password).grid(column = 1, row = 1, sticky = (W, E))
+    # Кнопки --------------------------------------------------------------
+    login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 3, sticky = E)
+    website = ttk.Button(mainframe, text = 'Сайт проекта', command = open_site).grid(column = 0,row = 3, sticky = W)
     # Отрисовка -----------------------------------------------------------
     for child in mainframe.winfo_children():
         child.grid_configure(padx = 5, pady = 5)
     loginwindow.mainloop()
 def secondWindow():
-    # Предупреждение ----------------------------------------------------------
-    messagebox.showwarning('Предупреждение', 'Убедитесь, что вы ввели верные данные')
     # Закрытие логин-окна -----------------------------------------------------
     loginwindow.destroy()
     # Глобализируем переменные ------------------------------------------------
@@ -59,8 +60,8 @@ def secondWindow():
     global delay
     # Основное ----------------------------------------------------------------
     app = Tk()
-    app.title('Email Sender [v1.2.2]')
-    app.geometry('510x340')
+    app.title('Email Sender, v1.3')
+    app.geometry('425x340')
     app.resizable(height = False, width = False)
     # Переменные -------------------------------------------------------------- 
     mail_to = StringVar()
@@ -73,34 +74,29 @@ def secondWindow():
     mainframe.columnconfigure(0, weight = 1)
     mainframe.rowconfigure(0, weight = 1)
     # Текст -------------------------------------------------------------------
-    ttk.Label(mainframe, text = 'Почта получателя: ').grid(column = 0, row = 1, sticky = W)
-    ttk.Label(mainframe, text = 'Тема сообщения: ').grid(column = 0, row = 2, sticky = W)
-    ttk.Label(mainframe, text = 'Текст сообщения: ').grid(column = 0, row = 3, sticky = W)
-    ttk.Label(mainframe, text = 'Таймер (сек): ').grid(column = 4, row = 4, sticky = E)
+    ttk.Label(mainframe, text = 'Почта получателя: ').grid(column = 0, row = 0, sticky = W)
+    ttk.Label(mainframe, text = 'Тема сообщения: ').grid(column = 0, row = 1, sticky = W)
+    ttk.Label(mainframe, text = 'Текст сообщения: ').grid(column = 0, row = 2, sticky = W)
+    ttk.Label(mainframe, text = 'Таймер (сек): ').grid(column = 2, row = 3, sticky = E)
     # Текстовые формы ---------------------------------------------------------
-    mail_to_form = ttk.Entry(mainframe, width = 30, textvariable = mail_to).grid(column = 4, row = 1, sticky = (W, E))
-    # -------------------------------------------------------------------------
-    subject_form = ttk.Entry(mainframe, width = 30, textvariable = subject).grid(column = 4, row = 2, sticky = (W, E))
-    # -------------------------------------------------------------------------
+    mail_to_form = ttk.Entry(mainframe, width = 30, textvariable = mail_to).grid(column = 2, row = 0, sticky = (W, E))
+    subject_form = ttk.Entry(mainframe, width = 30, textvariable = subject).grid(column = 2, row = 1, sticky = (W, E))
     message_form = Text(mainframe, width = 35, height = 10)
-    message_form.grid(column = 4, row = 3, sticky = (W, E))
+    message_form.grid(column = 2, row = 2, sticky = (W, E))
     # -------------------------------------------------------------------------
-    timer = ttk.Entry(mainframe, width = 15, textvariable = delay).grid(column = 4, row = 5, sticky = E)
+    timer = ttk.Entry(mainframe, width = 15, textvariable = delay).grid(column = 2, row = 4, sticky = E)
     # Кнопки ------------------------------------------------------------------
     send_button = ttk.Button(mainframe, text = 'Отправить', command = send)
-    send_button.grid(column = 4,row = 6,sticky = E)
+    send_button.grid(column = 2, row = 5, sticky = E)
     # -------------------------------------------------------------------------
-    add_file_button = ttk.Button(mainframe, text='Прикрепить', command=add_files)
-    add_file_button.grid(column=0,row=6,sticky=W)
-    # Прогресс-бар ------------------------------------------------------------
-    bar = Progressbar(mainframe, length = 200)
-    bar.grid(column = 0, row = 5, sticky = W)
-    bar['value'] = 0
-    bar_text = ttk.Label(mainframe, text = 'Статус отправки: ').grid(column = 0, row = 4, sticky = W)
+    add_file_button = ttk.Button(mainframe, text = 'Прикрепить', command = add_files)
+    add_file_button.grid(column = 0, row = 5, sticky = W)
     # Отрисовка ---------------------------------------------------------------
     for child in mainframe.winfo_children():
         child.grid_configure(padx = 5, pady = 5)
     app.mainloop()
+def open_site():
+    webbrowser.open_new('https://github.com/MatroCholo/email-sender')
 def add_files():
     # Глобализируем переменную ------------------------------------------------- 
     global filepath
@@ -111,8 +107,6 @@ def add_files():
 def send():
     # Глобализируем переменную ------------------------------------------------- 
     global time
-    # Прогресс-бар в начало ----------------------------------------------------
-    bar['value'] = 0 
     # Переменные для авторизации в smtp ----------------------------------------
     addr_from = mail.get()
     addr_to = mail_to.get()
@@ -120,8 +114,6 @@ def send():
     passwd = password.get()
     message = message_form.get('1.0', 'end')
     time = delay.get()
-    # --------------------------------------------------------------------------
-    bar['value'] = 25
     # Проверка используемого провайдера ----------------------------------------
     if addr_from[-9:] == 'gmail.com':
         _server = 'smtp.gmail.com'
@@ -140,7 +132,6 @@ def send():
     msg['From']    = addr_from                          
     msg['To']      = addr_to                            
     msg['Subject'] = sub
-    bar['value'] = 50
     # Проверка наличия выбора файлов ----------------------------------------
     if 'filepath' in globals():
         try:
@@ -171,22 +162,18 @@ def send():
             msg.attach(file)
             msg.attach(MIMEText(message, 'plain'))
             server = smtplib.SMTP(_server, _port)
-            bar['value'] = 75
             server.starttls()
             server.login(addr_from, passwd)
             if time == 0:
                 server.send_message(msg)
                 server.quit()
-                bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
             else:
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
-                bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
         except:
-            bar['value'] = 0
             messagebox.showerror('Ошибка', 'Сообщение не отправлено')
     else:
         try:
@@ -197,16 +184,13 @@ def send():
             if time == 0:
                 server.send_message(msg)
                 server.quit()
-                bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
             else:
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
-                bar['value'] = 100
-                messagebox.showinfo('Уведомление', 'Сообщение отправлено')
+                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
         except:
-            bar['value'] = 0
             messagebox.showerror('Ошибка', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
 if __name__ == '__main__':
