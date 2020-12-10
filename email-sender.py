@@ -1,8 +1,8 @@
 # Необходимые библиотеки -------------------------------------------------
-import webbrowser
-import smtplib
 import mimetypes
 import os
+import smtplib
+import webbrowser
 # ------------------------------------------------------------------------
 from os import path
 from time import sleep
@@ -10,11 +10,11 @@ from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 from tkinter.ttk import Checkbutton, Frame
 from email import encoders
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
 from email.mime.audio import MIMEAudio
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 # Функции -----------------------------------------------------------------
 def mainWindow():
     # Глобализируем переменные --------------------------------------------
