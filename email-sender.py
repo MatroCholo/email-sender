@@ -7,7 +7,7 @@ import os
 from os import path
 from time import sleep
 from tkinter import *
-from tkinter import messagebox, filedialog, ttk
+from tkinter import filedialog, messagebox, ttk
 from tkinter.ttk import Checkbutton, Frame
 from email import encoders
 from email.mime.base import MIMEBase
