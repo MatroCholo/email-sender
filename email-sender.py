@@ -59,8 +59,8 @@ def secondWindow():
     global delay
     # Основное ----------------------------------------------------------------
     app = Tk()
-    app.title('Email Sender, v1.3')
-    app.geometry('425x340')
+    app.title('Email Sender, v1.3.1')
+    app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
     app.resizable(height = False, width = False)
     # Переменные -------------------------------------------------------------- 
     mail_to = StringVar()
