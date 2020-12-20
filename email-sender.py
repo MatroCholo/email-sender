@@ -24,7 +24,7 @@ def mainWindow():
     # Основное ------------------------------------------------------------
     loginwindow = Tk()
     loginwindow.title('Авторизация')
-    loginwindow.geometry('298x130')
+    loginwindow.geometry('298x130') #Измените размеры, если у вас НЕ Windows
     loginwindow.resizable(height = False, width = False)
     # Переменные ----------------------------------------------------------
     mail = StringVar()
