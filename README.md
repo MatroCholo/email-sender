@@ -47,6 +47,6 @@
 | < v1.3       | :x:                |
 
 ## Обратная связь:
-ВК: https://vk.com/matrocholo
-Telegram: https://t.me/MatroCholo
+- ВК: https://vk.com/matrocholo
+- Telegram: https://t.me/MatroCholo
 
