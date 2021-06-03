@@ -52,7 +52,7 @@ def mainWindow():
     loginwindow.mainloop()
 def secondWindow():
     if validate_email(mail.get()) == False:
-        messagebox.showerror('Ошибка', 'Проверьте написание вашей почты')
+        messagebox.showerror('Ошибка', 'Проверьте написание почты')
     else:
         # Закрытие окна авторизации -----------------------------------------------
         loginwindow.destroy()
@@ -63,7 +63,7 @@ def secondWindow():
         global delay
         # Основное ----------------------------------------------------------------
         app = Tk()
-        app.title('Email Sender, v1.3.2')
+        app.title('Email Sender, v1.3.3')
         app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
         app.resizable(height = False, width = False)
         # Переменные -------------------------------------------------------------- 
@@ -113,90 +113,90 @@ def send():
     # Переменные для авторизации в smtp ----------------------------------------
     addr_from = mail.get()
     addr_to = mail_to.get()
-    sub = subject.get()
-    passwd = password.get()
-    message = message_form.get('1.0', 'end')
-    time = delay.get()
-    # Проверка используемого провайдера ----------------------------------------
-    if addr_from[-9:] == 'gmail.com':
-        _server = 'smtp.gmail.com'
-        _port = 587
-    if addr_from[-7:] == 'mail.ru' or addr_from[-5:] == 'bk.ru' or addr_from[-8:] == 'inbox.ru' or addr_from[-7:] == 'list.ru':
-        _server = 'smtp.mail.ru'
-        _port = 25
-    if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
-        _server = 'smtp.office365.com'
-        _port = 587
-    if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
-        _server = 'smtp.mail.me.com'
-        _port = 587
-    # Работа с smtp -------------------------------------------------------------
-    msg = MIMEMultipart()
-    msg['From']    = addr_from                          
-    msg['To']      = addr_to                            
-    msg['Subject'] = sub
-    # Проверка наличия выбора файлов ----------------------------------------
-    if 'filepath' in globals():
-        try:
-            filename = os.path.basename(filepath)
-            ctype, encoding = mimetypes.guess_type(filepath)
-            if ctype is None or encoding is not None:
-                ctype = 'application/octet-stream'
-            maintype, subtype = ctype.split('/', 1)
-            if maintype == 'text':
-                with open(filepath) as fp:
-                    file = MIMEText(fp.read(), _subtype=subtype)
-                    fp.close()
-            elif maintype == 'image':
-                with open(filepath, 'rb') as fp:
-                    file = MIMEImage(fp.read(), _subtype=subtype)
-                    fp.close()
-            elif maintype == 'audio':
-                with open(filepath, 'rb') as fp:
-                    file = MIMEAudio(fp.read(), _subtype=subtype)
-                    fp.close()
-            else:
-                with open(filepath, 'rb') as fp:
-                    file = MIMEBase(maintype, subtype)
-                    file.set_payload(fp.read())
-                    fp.close()
-                    encoders.encode_base64(file)
-            file.add_header('Content-Disposition', 'attachment', filename=filename)
-            msg.attach(file)
-            msg.attach(MIMEText(message, 'plain'))
-            server = smtplib.SMTP(_server, _port)
-            server.starttls()
-            server.login(addr_from, passwd)
-            if time == 0:
-                server.send_message(msg)
-                server.quit()
-                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-            else:
-                sleep(time)
-                server.send_message(msg)
-                server.quit()
-                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-        except:
-            messagebox.showerror('Ошибка', 'Сообщение не отправлено')
+    if validate_email(addr_to) == False:
+        messagebox.showerror('Ошибка', 'Проверьте написание почты получателя')
     else:
-        try:
-            msg.attach(MIMEText(message, 'plain'))
-            server = smtplib.SMTP(_server, _port)
-            server.starttls()
-            server.login(addr_from, passwd)
-            if time == 0:
-                server.send_message(msg)
-                server.quit()
-                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-            else:
-                sleep(time)
-                server.send_message(msg)
-                server.quit()
-                messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-        except:
-            messagebox.showerror('Ошибка', 'Сообщение не отправлено')
-        
-        
-
+        sub = subject.get()
+        passwd = password.get()
+        message = message_form.get('1.0', 'end')
+        time = delay.get()
+        # Проверка используемого провайдера ----------------------------------------
+        if addr_from[-9:] == 'gmail.com':
+            _server = 'smtp.gmail.com'
+            _port = 587
+        if addr_from[-7:] == 'mail.ru' or addr_from[-5:] == 'bk.ru' or addr_from[-8:] == 'inbox.ru' or addr_from[-7:] == 'list.ru':
+            _server = 'smtp.mail.ru'
+            _port = 25
+        if addr_from[-11:] == 'hotmail.com' or addr_from[-8:] == 'live.com' or addr_from[-7:] == 'msn.com' or addr_from[-12:] == 'passport.com' or addr_from[-11:] == 'outlook.com':
+            _server = 'smtp.office365.com'
+            _port = 587
+        if addr_from[-10:] == 'icloud.com' or addr_from[-6:] == 'me.com' or addr_from[-7:] == 'mac.com':
+            _server = 'smtp.mail.me.com'
+            _port = 587
+        # Работа с smtp -------------------------------------------------------------
+        msg = MIMEMultipart()
+        msg['From']    = addr_from                          
+        msg['To']      = addr_to                            
+        msg['Subject'] = sub
+        # Проверка наличия выбора файлов ----------------------------------------
+        if 'filepath' in globals():
+            try:
+                filename = os.path.basename(filepath)
+                ctype, encoding = mimetypes.guess_type(filepath)
+                if ctype is None or encoding is not None:
+                    ctype = 'application/octet-stream'
+                maintype, subtype = ctype.split('/', 1)
+                if maintype == 'text':
+                    with open(filepath) as fp:
+                        file = MIMEText(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'image':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEImage(fp.read(), _subtype=subtype)
+                        fp.close()
+                elif maintype == 'audio':
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEAudio(fp.read(), _subtype=subtype)
+                        fp.close()
+                else:
+                    with open(filepath, 'rb') as fp:
+                        file = MIMEBase(maintype, subtype)
+                        file.set_payload(fp.read())
+                        fp.close()
+                        encoders.encode_base64(file)
+                file.add_header('Content-Disposition', 'attachment', filename=filename)
+                msg.attach(file)
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                server.starttls()
+                server.login(addr_from, passwd)
+                if time == 0:
+                    server.send_message(msg)
+                    server.quit()
+                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+                else:
+                    sleep(time)
+                    server.send_message(msg)
+                    server.quit()
+                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+            except:
+                messagebox.showerror('Ошибка', 'Сообщение не отправлено')
+        else:
+            try:
+                msg.attach(MIMEText(message, 'plain'))
+                server = smtplib.SMTP(_server, _port)
+                server.starttls()
+                server.login(addr_from, passwd)
+                if time == 0:
+                    server.send_message(msg)
+                    server.quit()
+                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+                else:
+                    sleep(time)
+                    server.send_message(msg)
+                    server.quit()
+                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+            except:
+                messagebox.showerror('Ошибка', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
 mainWindow()
