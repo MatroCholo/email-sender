@@ -32,11 +32,11 @@
 - Нажмите **Windows + R**, введите **cmd** и нажмите **Enter**,
 - В открывшемся окне введите **pip install pyinstaller**,
 - После установки введите:
-**pyinstaller C:\Directory\file.py --onefile --noconsoled --icon C:\Directory\file.icon**, где
+**pyinstaller C:\Directory\file.py --onefile --noconsole --icon C:\Directory\file.icon**, где
 - - **pyinstaller** - **команда конвертирования**,
 - - **C:\Directory\file.py** - **путь к файлу с расширением .py**,
 - - **--onefile** - **конвертация в один файл**,
-- - **--noconsoled** - **запуск сконвертированного файла без консоли (для программ с GUI)**,
+- - **--noconsole** - **запуск сконвертированного файла без консоли (для программ с GUI)**,
 - - **--icon C:\Directory\file.icon** - **добавление иконки и путь к ней (необязательно)**.
 
 ## Поддерживаемые версии:
