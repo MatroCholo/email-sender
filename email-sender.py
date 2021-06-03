@@ -15,6 +15,7 @@ from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from validate_email import validate_email
 # Функции -----------------------------------------------------------------
 def mainWindow():
     # Глобализируем переменные --------------------------------------------
@@ -50,50 +51,53 @@ def mainWindow():
         child.grid_configure(padx = 5, pady = 5)
     loginwindow.mainloop()
 def secondWindow():
-    # Закрытие окна авторизации -----------------------------------------------
-    loginwindow.destroy()
-    # Глобализируем переменные ------------------------------------------------
-    global mail_to
-    global subject
-    global message_form
-    global delay
-    # Основное ----------------------------------------------------------------
-    app = Tk()
-    app.title('Email Sender, v1.3.1')
-    app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
-    app.resizable(height = False, width = False)
-    # Переменные -------------------------------------------------------------- 
-    mail_to = StringVar()
-    subject = StringVar()
-    message_form = StringVar()
-    delay = IntVar()
-    # Геометрия окна ----------------------------------------------------------
-    mainframe = Frame(app, padding = '3 3 12 12')
-    mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
-    mainframe.columnconfigure(0, weight = 1)
-    mainframe.rowconfigure(0, weight = 1)
-    # Текст -------------------------------------------------------------------
-    ttk.Label(mainframe, text = 'Почта получателя: ').grid(column = 0, row = 0, sticky = W)
-    ttk.Label(mainframe, text = 'Тема сообщения: ').grid(column = 0, row = 1, sticky = W)
-    ttk.Label(mainframe, text = 'Текст сообщения: ').grid(column = 0, row = 2, sticky = W)
-    ttk.Label(mainframe, text = 'Таймер (сек): ').grid(column = 2, row = 3, sticky = E)
-    # Текстовые формы ---------------------------------------------------------
-    mail_to_form = ttk.Entry(mainframe, width = 30, textvariable = mail_to).grid(column = 2, row = 0, sticky = (W, E))
-    subject_form = ttk.Entry(mainframe, width = 30, textvariable = subject).grid(column = 2, row = 1, sticky = (W, E))
-    message_form = Text(mainframe, width = 35, height = 10)
-    message_form.grid(column = 2, row = 2, sticky = (W, E))
-    # -------------------------------------------------------------------------
-    timer = ttk.Entry(mainframe, width = 15, textvariable = delay).grid(column = 2, row = 4, sticky = E)
-    # Кнопки ------------------------------------------------------------------
-    send_button = ttk.Button(mainframe, text = 'Отправить', command = send)
-    send_button.grid(column = 2, row = 5, sticky = E)
-    # -------------------------------------------------------------------------
-    add_file_button = ttk.Button(mainframe, text = 'Прикрепить', command = add_files)
-    add_file_button.grid(column = 0, row = 5, sticky = W)
-    # Отрисовка ---------------------------------------------------------------
-    for child in mainframe.winfo_children():
-        child.grid_configure(padx = 5, pady = 5)
-    app.mainloop()
+    if validate_email(mail.get()) == False:
+        messagebox.showerror('Ошибка', 'Проверьте написание вашей почты')
+    else:
+        # Закрытие окна авторизации -----------------------------------------------
+        loginwindow.destroy()
+        # Глобализируем переменные ------------------------------------------------
+        global mail_to
+        global subject
+        global message_form
+        global delay
+        # Основное ----------------------------------------------------------------
+        app = Tk()
+        app.title('Email Sender, v1.3.2')
+        app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
+        app.resizable(height = False, width = False)
+        # Переменные -------------------------------------------------------------- 
+        mail_to = StringVar()
+        subject = StringVar()
+        message_form = StringVar()
+        delay = IntVar()
+        # Геометрия окна ----------------------------------------------------------
+        mainframe = Frame(app, padding = '3 3 12 12')
+        mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
+        mainframe.columnconfigure(0, weight = 1)
+        mainframe.rowconfigure(0, weight = 1)
+        # Текст -------------------------------------------------------------------
+        ttk.Label(mainframe, text = 'Почта получателя: ').grid(column = 0, row = 0, sticky = W)
+        ttk.Label(mainframe, text = 'Тема сообщения: ').grid(column = 0, row = 1, sticky = W)
+        ttk.Label(mainframe, text = 'Текст сообщения: ').grid(column = 0, row = 2, sticky = W)
+        ttk.Label(mainframe, text = 'Таймер (сек): ').grid(column = 2, row = 3, sticky = E)
+        # Текстовые формы ---------------------------------------------------------
+        mail_to_form = ttk.Entry(mainframe, width = 30, textvariable = mail_to).grid(column = 2, row = 0, sticky = (W, E))
+        subject_form = ttk.Entry(mainframe, width = 30, textvariable = subject).grid(column = 2, row = 1, sticky = (W, E))
+        message_form = Text(mainframe, width = 35, height = 10)
+        message_form.grid(column = 2, row = 2, sticky = (W, E))
+        # -------------------------------------------------------------------------
+        timer = ttk.Entry(mainframe, width = 15, textvariable = delay).grid(column = 2, row = 4, sticky = E)
+        # Кнопки ------------------------------------------------------------------
+        send_button = ttk.Button(mainframe, text = 'Отправить', command = send)
+        send_button.grid(column = 2, row = 5, sticky = E)
+        # -------------------------------------------------------------------------
+        add_file_button = ttk.Button(mainframe, text = 'Прикрепить', command = add_files)
+        add_file_button.grid(column = 0, row = 5, sticky = W)
+        # Отрисовка ---------------------------------------------------------------
+        for child in mainframe.winfo_children():
+            child.grid_configure(padx = 5, pady = 5)
+        app.mainloop()
 def open_site():
     webbrowser.open_new('https://github.com/MatroCholo/email-sender')
 def add_files():
@@ -191,5 +195,8 @@ def send():
                 messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
         except:
             messagebox.showerror('Ошибка', 'Сообщение не отправлено')
+        
+        
+
 # Запуск ------------------------------------------------------------------------
 mainWindow()
