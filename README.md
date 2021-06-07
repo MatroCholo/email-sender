@@ -16,7 +16,6 @@
 
 ## Использование:
 **Windows:**
-- Установите **Python 3.x**.
 - Скачайте **.exe-файл** по **[ссылке](https://github.com/MatroCholo/email-sender/releases)**
 - Запустите **email-sender.exe**
 
@@ -29,6 +28,7 @@
 - python **email-sender.py**
 
 ## Ручная конвертация .py в .exe:
+- Установите **Python 3.x**.
 - Нажмите **Windows + R**, введите **cmd** и нажмите **Enter**,
 - В открывшемся окне введите **pip install pyinstaller**,
 - После установки введите:
