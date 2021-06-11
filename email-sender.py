@@ -1,21 +1,25 @@
 # Необходимые библиотеки -------------------------------------------------
-import mimetypes
-import os
-import smtplib
-import webbrowser
-# ------------------------------------------------------------------------
-from os import path
-from time import sleep
-from tkinter import *
-from tkinter import filedialog, messagebox, ttk
-from tkinter.ttk import Checkbutton, Frame
-from email import encoders
-from email.mime.audio import MIMEAudio
-from email.mime.base import MIMEBase
-from email.mime.image import MIMEImage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from validate_email import validate_email
+try:
+    import mimetypes
+    import sys
+    import os
+    import smtplib
+    import webbrowser
+    from os import path
+    from time import sleep
+    from tkinter import *
+    from tkinter import filedialog, messagebox, ttk
+    from tkinter.ttk import Checkbutton, Frame
+    from email import encoders
+    from email.mime.audio import MIMEAudio
+    from email.mime.base import MIMEBase
+    from email.mime.image import MIMEImage
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    from validate_email import validate_email
+except ImportError:
+    print('Критическая ошибка! Убедитесь, что Python 3.x верно установлен.')
+    sys.exit(1)
 # Функции -----------------------------------------------------------------
 def mainWindow():
     # Глобализируем переменные --------------------------------------------
@@ -63,7 +67,7 @@ def secondWindow():
         global delay
         # Основное ----------------------------------------------------------------
         app = Tk()
-        app.title('Email Sender, v1.3.3')
+        app.title('Email Sender, v1.3.4')
         app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
         app.resizable(height = False, width = False)
         # Переменные -------------------------------------------------------------- 
@@ -199,4 +203,7 @@ def send():
             except:
                 messagebox.showerror('Ошибка', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
-mainWindow()
+try:
+    mainWindow()
+except:
+    print('Ошибка! Убедитесь, что все компоненты установлены верно.\nБольше информации: https://github.com/MatroCholo/email-sender')
