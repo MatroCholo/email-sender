@@ -28,8 +28,8 @@ def mainWindow():
     global password
     # Основное ------------------------------------------------------------
     loginwindow = Tk()
-    loginwindow.title('Авторизация')
-    loginwindow.geometry('298x130') #Измените размеры, если у вас НЕ Windows
+    loginwindow.title('Вход')
+    loginwindow.geometry('296x160') #Измените размеры, если у вас НЕ Windows
     loginwindow.resizable(height = False, width = False)
     # Переменные ----------------------------------------------------------
     mail = StringVar()
@@ -43,21 +43,20 @@ def mainWindow():
     ttk.Label(mainframe, text = 'Почта:').grid(column = 0, row = 0, sticky = W)
     ttk.Label(mainframe, text = 'Пароль:').grid(column = 0, row = 1, sticky = W)
     ttk.Label(mainframe, text = '').grid(column = 0, row = 2, sticky = W)
-    ttk.Label(mainframe, text = '').grid(column = 1, row = 2, sticky = E)
+    ttk.Label(mainframe, text = '').grid(column = 0, row = 3, sticky = E)
     # Текстовые формы -----------------------------------------------------
     mail_form = ttk.Entry(mainframe, width = 30, textvariable = mail).grid(column = 1, row = 0, sticky = (W, E))
     password_form = ttk.Entry(mainframe, width = 30, show = '*', textvariable = password).grid(column = 1, row = 1, sticky = (W, E))
     # Кнопки --------------------------------------------------------------
-    login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 3, sticky = E)
-    website = ttk.Button(mainframe, text = 'Сайт проекта', command = open_site).grid(column = 0,row = 3, sticky = W)
+    login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 4, sticky = E)
+    website = ttk.Button(mainframe, text = 'Сайт проекта', command = open_site).grid(column = 0,row = 4, sticky = W)
     # Меню ----------------------------------------------------------------
     menu = Menu(loginwindow)
-    mainmenu = Menu(menu, tearoff=0)
+    mainmenu = Menu(menu, tearoff = 0)
     menu.add_cascade(label='Меню', menu=mainmenu)  
-    mainmenu.add_command(label='Файл', command = cli_mod)  
+    mainmenu.add_command(label='Файл')  
     #mainmenu.add_command(label='Настройки', command = open_settings)
-
-    infomenu = Menu(menu, tearoff=0)
+    infomenu = Menu(menu, tearoff = 0)
     menu.add_cascade(label='Справка', menu=infomenu)
     infomenu.add_command(label='О программе', command = helpmenu)
     loginwindow.config(menu=menu) 
@@ -69,7 +68,7 @@ def secondWindow():
     if validate_email(mail.get()) == False:
         messagebox.showerror('Ошибка', 'Проверьте написание почты')
     else:
-        # Закрытие окна авторизации -----------------------------------------------
+        # Закрытие окна входа -----------------------------------------------------
         loginwindow.destroy()
         # Глобализируем переменные ------------------------------------------------
         global mail_to
@@ -79,7 +78,7 @@ def secondWindow():
         global app
         # Основное ----------------------------------------------------------------
         app = Tk()
-        app.title('Email Sender, v1.4')
+        app.title('Email Sender, v1.4.1')
         app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
         app.resizable(height = False, width = False)
         # Переменные -------------------------------------------------------------- 
@@ -114,7 +113,7 @@ def secondWindow():
         menu = Menu(app)
         mainmenu = Menu(menu, tearoff=0)
         menu.add_cascade(label='Меню', menu=mainmenu)  
-        mainmenu.add_command(label='Файл', command = cli_mod)  
+        mainmenu.add_command(label='Файл')  
         #mainmenu.add_command(label='Настройки', command = open_settings)
         infomenu = Menu(menu, tearoff=0)
         menu.add_cascade(label='Справка', menu=infomenu)
@@ -124,8 +123,7 @@ def secondWindow():
         for child in mainframe.winfo_children():
             child.grid_configure(padx = 5, pady = 5)
         app.mainloop()
-def open_site():
-    webbrowser.open_new('https://github.com/MatroCholo/email-sender')
+
 def add_files():
     # Глобализируем переменную ------------------------------------------------- 
     global filepath
@@ -133,15 +131,14 @@ def add_files():
     filepath = filedialog.askopenfile('r', initialdir = path.dirname(__file__))
     # Узнаём путь файла --------------------------------------------------------
     filepath = filepath.name
+
 def send():
-    # Глобализируем переменную ------------------------------------------------- 
-    global time
-    # Переменные для авторизации в smtp ----------------------------------------
-    addr_from = mail.get()
-    addr_to = mail_to.get()
     if validate_email(addr_to) == False:
         messagebox.showerror('Ошибка', 'Проверьте написание почты получателя')
     else:
+        # Переменные для авторизации в smtp ----------------------------------------
+        addr_from = mail.get()
+        addr_to = mail_to.get()
         sub = subject.get()
         passwd = password.get()
         message = message_form.get('1.0', 'end')
@@ -166,69 +163,59 @@ def send():
         msg['Subject'] = sub
         # Проверка наличия выбора файлов ----------------------------------------
         if 'filepath' in globals():
+            filename = os.path.basename(filepath)
+            ctype, encoding = mimetypes.guess_type(filepath)
+            if ctype is None or encoding is not None:
+                ctype = 'application/octet-stream'
+            maintype, subtype = ctype.split('/', 1)
+            if maintype == 'text':
+                with open(filepath) as fp:
+                    file = MIMEText(fp.read(), _subtype=subtype)
+                    fp.close()
+            elif maintype == 'image':
+                with open(filepath, 'rb') as fp:
+                    file = MIMEImage(fp.read(), _subtype=subtype)
+                    fp.close()
+            elif maintype == 'audio':
+                with open(filepath, 'rb') as fp:
+                    file = MIMEAudio(fp.read(), _subtype=subtype)
+                    fp.close()
+            else:
+                with open(filepath, 'rb') as fp:
+                    file = MIMEBase(maintype, subtype)
+                    file.set_payload(fp.read())
+                    fp.close()
+                    encoders.encode_base64(file)
             try:
-                filename = os.path.basename(filepath)
-                ctype, encoding = mimetypes.guess_type(filepath)
-                if ctype is None or encoding is not None:
-                    ctype = 'application/octet-stream'
-                maintype, subtype = ctype.split('/', 1)
-                if maintype == 'text':
-                    with open(filepath) as fp:
-                        file = MIMEText(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'image':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEImage(fp.read(), _subtype=subtype)
-                        fp.close()
-                elif maintype == 'audio':
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEAudio(fp.read(), _subtype=subtype)
-                        fp.close()
-                else:
-                    with open(filepath, 'rb') as fp:
-                        file = MIMEBase(maintype, subtype)
-                        file.set_payload(fp.read())
-                        fp.close()
-                        encoders.encode_base64(file)
                 file.add_header('Content-Disposition', 'attachment', filename=filename)
                 msg.attach(file)
                 msg.attach(MIMEText(message, 'plain'))
                 server = smtplib.SMTP(_server, _port)
                 server.starttls()
                 server.login(addr_from, passwd)
-                if time == 0:
-                    server.send_message(msg)
-                    server.quit()
-                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-                else:
-                    sleep(time)
-                    server.send_message(msg)
-                    server.quit()
-                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+                sleep(time)
+                server.send_message(msg)
+                server.quit()
+                messagebox.showinfo('Успех', 'Письмо успешно отправлено')
             except:
-                messagebox.showerror('Ошибка', 'Сообщение не отправлено')
+                messagebox.showerror('Ошибка', 'Письмо не отправлено')
         else:
             try:
                 msg.attach(MIMEText(message, 'plain'))
                 server = smtplib.SMTP(_server, _port)
                 server.starttls()
                 server.login(addr_from, passwd)
-                if time == 0:
-                    server.send_message(msg)
-                    server.quit()
-                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
-                else:
-                    sleep(time)
-                    server.send_message(msg)
-                    server.quit()
-                    messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
+                sleep(time)
+                server.send_message(msg)
+                server.quit()
+                messagebox.showinfo('Успех', 'Письмо успешно отправлено')
             except:
-                messagebox.showerror('Ошибка', 'Сообщение не отправлено')
-def cli_mod():
-    messagebox.showerror('Тут ничего нет', 'Я серьёзно, не нажимайте больше сюда')
+                messagebox.showerror('Ошибка', 'Письмо не отправлено')
 def helpmenu():
     from helpinfo import infobanner
     infobanner()
+def open_site():
+    webbrowser.open_new('https://github.com/MatroCholo/email-sender')
 # Запуск ------------------------------------------------------------------------
 try:
     mainWindow()
