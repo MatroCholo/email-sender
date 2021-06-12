@@ -1,14 +1,14 @@
 # Необходимые библиотеки -------------------------------------------------
+import sys
 try:
     import mimetypes
-    import sys
     import os
     import smtplib
     import webbrowser
     from os import path
     from time import sleep
     from tkinter import *
-    from tkinter import filedialog, messagebox, ttk
+    from tkinter import filedialog, messagebox, ttk, Menu
     from tkinter.ttk import Checkbutton, Frame
     from email import encoders
     from email.mime.audio import MIMEAudio
@@ -50,6 +50,21 @@ def mainWindow():
     # Кнопки --------------------------------------------------------------
     login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 3, sticky = E)
     website = ttk.Button(mainframe, text = 'Сайт проекта', command = open_site).grid(column = 0,row = 3, sticky = W)
+    # Меню ----------------------------------------------------------------
+    menu = Menu(loginwindow)
+    mainmenu = Menu(menu, tearoff=0)
+    menu.add_cascade(label='Меню', menu=mainmenu)  
+    mainmenu.add_command(label='Файл', command = cli_mod)  
+    #mainmenu.add_command(label='Настройки', command = open_settings)
+
+    infomenu = Menu(menu, tearoff=0)
+    menu.add_cascade(label='Справка', menu=infomenu)
+    infomenu.add_command(label='О программе', command = helpmenu)
+    loginwindow.config(menu=menu) 
+
+
+
+
     # Отрисовка -----------------------------------------------------------
     for child in mainframe.winfo_children():
         child.grid_configure(padx = 5, pady = 5)
@@ -65,9 +80,10 @@ def secondWindow():
         global subject
         global message_form
         global delay
+        global app
         # Основное ----------------------------------------------------------------
         app = Tk()
-        app.title('Email Sender, v1.3.4')
+        app.title('Email Sender, v1.4')
         app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
         app.resizable(height = False, width = False)
         # Переменные -------------------------------------------------------------- 
@@ -98,6 +114,16 @@ def secondWindow():
         # -------------------------------------------------------------------------
         add_file_button = ttk.Button(mainframe, text = 'Прикрепить', command = add_files)
         add_file_button.grid(column = 0, row = 5, sticky = W)
+        # Меню ----------------------------------------------------------------
+        menu = Menu(app)
+        mainmenu = Menu(menu, tearoff=0)
+        menu.add_cascade(label='Меню', menu=mainmenu)  
+        mainmenu.add_command(label='Файл', command = cli_mod)  
+        #mainmenu.add_command(label='Настройки', command = open_settings)
+        infomenu = Menu(menu, tearoff=0)
+        menu.add_cascade(label='Справка', menu=infomenu)
+        infomenu.add_command(label='О программе', command = helpmenu)
+        app.config(menu=menu) 
         # Отрисовка ---------------------------------------------------------------
         for child in mainframe.winfo_children():
             child.grid_configure(padx = 5, pady = 5)
@@ -203,6 +229,14 @@ def send():
             except:
                 messagebox.showerror('Ошибка', 'Сообщение не отправлено')
 # Запуск ------------------------------------------------------------------------
+
+
+def cli_mod():
+    messagebox.showerror('Тут ничего нет', 'Я серьёзно, не нажимайте больше сюда')
+def helpmenu():
+    from helpinfo import infobanner
+    infobanner()
+
 try:
     mainWindow()
 except:
