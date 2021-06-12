@@ -61,10 +61,6 @@ def mainWindow():
     menu.add_cascade(label='Справка', menu=infomenu)
     infomenu.add_command(label='О программе', command = helpmenu)
     loginwindow.config(menu=menu) 
-
-
-
-
     # Отрисовка -----------------------------------------------------------
     for child in mainframe.winfo_children():
         child.grid_configure(padx = 5, pady = 5)
@@ -228,15 +224,12 @@ def send():
                     messagebox.showinfo('Уведомление', 'Сообщение успешно отправлено')
             except:
                 messagebox.showerror('Ошибка', 'Сообщение не отправлено')
-# Запуск ------------------------------------------------------------------------
-
-
 def cli_mod():
     messagebox.showerror('Тут ничего нет', 'Я серьёзно, не нажимайте больше сюда')
 def helpmenu():
     from helpinfo import infobanner
     infobanner()
-
+# Запуск ------------------------------------------------------------------------
 try:
     mainWindow()
 except:
