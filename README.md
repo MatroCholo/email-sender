@@ -19,13 +19,6 @@
 - Скачайте **.exe-файл** по **[ссылке](https://github.com/MatroCholo/email-sender/releases)**
 - Запустите **email-sender.exe**
 
-**Linux:**
-- Корректная работа **не гарантируется**. Возможны неправильная отрисовка и неработоспособность функций.
-- Установите **Python 3.x** и **git** в соответствии с вашим дистрибутивом,
-- Установите библиотеку **validate_email** (pip install validate_email)
-- git clone **https://github.com/MatroCholo/email-sender**
-- cd **email-sender/**
-- python **email-sender.py**
 
 ## Ручная конвертация .py в .exe:
 - Установите **Python 3.x**.
