@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>476</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>501</width>
+    <height>476</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>501</width>
+    <height>476</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Email Sender, v1.5</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.ico</normaloff>icon.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="buttons">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>380</y>
+      <width>481</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QPushButton" name="add_file_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:10px;
+background-color: rgb(255, 255, 255);
+</string>
+     </property>
+     <property name="text">
+      <string>Файл</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="send_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #272727;
+	color: #fff;
+	border-radius: 15px;
+	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+}
+
+QPushButton:hover {
+	background-color: #303030;
+	color: #fff;
+	border-radius: 15px;
+	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+}
+
+QPushButton:pressed {
+	background-color: #343434;
+	color: #fff;
+	border-radius: 15px;
+	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+}</string>
+     </property>
+     <property name="text">
+      <string>Отправить</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="timer_form">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>40</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:10px;
+background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="timer_text">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>10</y>
+       <width>68</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Таймер (сек):</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="email">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>481</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="message_text_text">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>92</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Текст сообщения:</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="message_form">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>102</y>
+       <width>461</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:15px;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="mail_to_text">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>98</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Почта получателя:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="mail_to_form">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите текст&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255,255,255);
+border-radius:10px;
+</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="subject_text_text">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>10</y>
+       <width>87</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Тема сообщения:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="subject_form">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>40</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите текст&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255,255,255);
+border-radius:10px;
+</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
