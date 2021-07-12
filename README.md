@@ -1,4 +1,4 @@
-<h1 align="center">Email Sender, v1.4.2</h1>
+<h1 align="center">Email Sender, v1.5</h1>
 <h4 align="center">Email Sender - это простая программа, позволяющая отправлять электронной почту без необходимости открывать Веб-версию или запускать отдельный клиент.</h4>
 
 ## Предупреждения:
@@ -22,7 +22,8 @@
 **Linux:**
 - Корректная работа **не гарантируется**. Возможны неправильная отрисовка и неработоспособность функций.
 - Установите **Python 3.x** и **git** в соответствии с вашим дистрибутивом,
-- Установите библиотеку **validate_email** (pip install validate_email)
+- Установите модуль **validate_email** (pip install validate_email)
+- Установите библиотеку **PyQt5** (pip install pyqt5)
 - git clone **https://github.com/MatroCholo/email-sender**
 - cd **email-sender/**
 - python **email-sender.py**
@@ -43,8 +44,8 @@
 
 | Версия       | Поддержка          |
 | -------------| ------------------ |
-| v1.4.2       | :white_check_mark: |
-| <v1.4.1      | :x:                |
+| v1.5         | :white_check_mark: |
+| <v1.4.2      | :x:                |
 
 ## Обратная связь:
 - Telegram: https://t.me/MatroCholo
