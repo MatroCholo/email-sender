@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+#-*- coding: utf-8 -*-
+
 # Необходимые библиотеки -------------------------------------------------
 import sys
 try:
@@ -7,122 +10,100 @@ try:
     import webbrowser
     from os import path
     from time import sleep
-    from tkinter import *
-    from tkinter import filedialog, messagebox, ttk
-    from tkinter.ttk import Frame
     from email import encoders
     from email.mime.audio import MIMEAudio
     from email.mime.base import MIMEBase
     from email.mime.image import MIMEImage
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
-    from validate_email import validate_email
 except ImportError:
     print('Критическая ошибка! Убедитесь, что Python 3.x верно установлен.')
     sys.exit(1)
-# Функции -----------------------------------------------------------------
-def mainWindow():
-    # Глобализируем переменные --------------------------------------------
-    global loginwindow
-    global mail
+
+try:
+    from validate_email import validate_email
+except ImportError:
+    print('Критическая ошибка! Убедитесь, что модуль validate_email установлен.')
+    sys.exit(1)
+
+try:
+    from PyQt5 import QtCore, QtGui, QtWidgets
+    from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QFileDialog
+    from gui import Ui_MainWindow
+    from login import Ui_loginWindow
+except ImportError:
+    print('Критическая ошибка! Убедитесь, что библиотека PyQT5 установлена.')
+    sys.exit(1)
+
+
+def loginwindow():
+    global mail_from
     global password
-    # Основное ------------------------------------------------------------
-    loginwindow = Tk()
-    loginwindow.title('Вход')
-    loginwindow.geometry('296x160') #Измените размеры, если у вас НЕ Windows
-    loginwindow.resizable(height = False, width = False)
-    # Переменные ----------------------------------------------------------
-    mail = StringVar()
-    password = StringVar()
-    # Геометрия окна ------------------------------------------------------
-    mainframe = Frame(loginwindow, padding = '3 3 12 12')
-    mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
-    mainframe.columnconfigure(0, weight = 1)
-    mainframe.rowconfigure(0, weight = 1)
-    # Текст ---------------------------------------------------------------
-    ttk.Label(mainframe, text = 'Почта:').grid(column = 0, row = 0, sticky = W)
-    ttk.Label(mainframe, text = 'Пароль:').grid(column = 0, row = 1, sticky = W)
-    ttk.Label(mainframe, text = '').grid(column = 0, row = 2, sticky = W)
-    ttk.Label(mainframe, text = '').grid(column = 0, row = 3, sticky = E)
-    # Текстовые формы -----------------------------------------------------
-    mail_form = ttk.Entry(mainframe, width = 30, textvariable = mail).grid(column = 1, row = 0, sticky = (W, E))
-    password_form = ttk.Entry(mainframe, width = 30, show = '*', textvariable = password).grid(column = 1, row = 1, sticky = (W, E))
-    # Кнопки --------------------------------------------------------------
-    login_button = ttk.Button(mainframe, text = 'Войти', command = secondWindow).grid(column = 1,row = 4, sticky = E)
-    website = ttk.Button(mainframe, text = 'Сайт проекта', command = open_site).grid(column = 0,row = 4, sticky = W)
-    # Отрисовка -----------------------------------------------------------
-    for child in mainframe.winfo_children():
-        child.grid_configure(padx = 5, pady = 5)
-    loginwindow.mainloop()
-def secondWindow():
-    if validate_email(mail.get()) == False:
-        messagebox.showerror('Ошибка', 'Проверьте написание почты')
-    else:
-        # Закрытие окна входа -----------------------------------------------------
-        loginwindow.destroy()
-        # Глобализируем переменные ------------------------------------------------
-        global mail_to
-        global subject
-        global message_form
-        global delay
-        global app
-        # Основное ----------------------------------------------------------------
-        app = Tk()
-        app.title('Email Sender, v1.4.2')
-        app.geometry('425x340') #Измените размеры, если у вас НЕ Windows
-        app.resizable(height = False, width = False)
-        # Переменные -------------------------------------------------------------- 
-        mail_to = StringVar()
-        subject = StringVar()
-        message_form = StringVar()
-        delay = IntVar()
-        # Геометрия окна ----------------------------------------------------------
-        mainframe = Frame(app, padding = '3 3 12 12')
-        mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
-        mainframe.columnconfigure(0, weight = 1)
-        mainframe.rowconfigure(0, weight = 1)
-        # Текст -------------------------------------------------------------------
-        ttk.Label(mainframe, text = 'Почта получателя: ').grid(column = 0, row = 0, sticky = W)
-        ttk.Label(mainframe, text = 'Тема сообщения: ').grid(column = 0, row = 1, sticky = W)
-        ttk.Label(mainframe, text = 'Текст сообщения: ').grid(column = 0, row = 2, sticky = W)
-        ttk.Label(mainframe, text = 'Таймер (сек): ').grid(column = 2, row = 3, sticky = E)
-        # Текстовые формы ---------------------------------------------------------
-        mail_to_form = ttk.Entry(mainframe, width = 30, textvariable = mail_to).grid(column = 2, row = 0, sticky = (W, E))
-        subject_form = ttk.Entry(mainframe, width = 30, textvariable = subject).grid(column = 2, row = 1, sticky = (W, E))
-        message_form = Text(mainframe, width = 35, height = 10)
-        message_form.grid(column = 2, row = 2, sticky = (W, E))
-        # -------------------------------------------------------------------------
-        timer = ttk.Entry(mainframe, width = 15, textvariable = delay).grid(column = 2, row = 4, sticky = E)
-        # Кнопки ------------------------------------------------------------------
-        send_button = ttk.Button(mainframe, text = 'Отправить', command = send)
-        send_button.grid(column = 2, row = 5, sticky = E)
-        # -------------------------------------------------------------------------
-        add_file_button = ttk.Button(mainframe, text = 'Прикрепить', command = add_files)
-        add_file_button.grid(column = 0, row = 5, sticky = W) 
-        # Отрисовка ---------------------------------------------------------------
-        for child in mainframe.winfo_children():
-            child.grid_configure(padx = 5, pady = 5)
-        app.mainloop()
+    login_app = QtWidgets.QApplication(sys.argv)
+    loginWindow = QtWidgets.QMainWindow()
+    login_ui = Ui_loginWindow()
+    login_ui.setupUi(loginWindow)
+    loginWindow.show()
+    
+    def close_():
+        global mail_from
+        global password
+        mail_from = login_ui.mail_from_form.text()
+        password = login_ui.password_form.text()
+        loginWindow.close()
 
-def add_files():
-    # Глобализируем переменную ------------------------------------------------- 
-    global filepath
-    # Создаём запрос на выбор файла --------------------------------------------
-    filepath = filedialog.askopenfile('r', initialdir = path.dirname(__file__))
-    # Узнаём путь файла --------------------------------------------------------
-    filepath = filepath.name
 
-def send():
-    if validate_email(addr_to) == False:
-        messagebox.showerror('Ошибка', 'Проверьте написание почты получателя')
-    else:
-        # Переменные для авторизации в smtp ----------------------------------------
-        addr_from = mail.get()
-        addr_to = mail_to.get()
-        sub = subject.get()
-        passwd = password.get()
-        message = message_form.get('1.0', 'end')
-        time = delay.get()
+    def open_site():
+        webbrowser.open_new('https://github.com/MatroCholo/email-sender')
+    
+
+
+    login_ui.login_button.clicked.connect(close_)
+    login_ui.site_button.clicked.connect(open_site)
+
+    login_app.exec_()
+    main(mail_from, password)
+
+    
+
+
+def main(mail_from, password):
+
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+
+
+
+    def error():
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText('Что-то пошло не так. Проверьте введённые данные!')
+        msg.setWindowTitle("Ошибка!")
+        msg.exec_()
+    def success():
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText('Письмо отправлено')
+        msg.setWindowTitle("Успех")
+        msg.exec_()
+
+    def add_files():
+        # Глобализируем переменную ------------------------------------------------- 
+        global filepath
+        # Создаём запрос на выбор файла --------------------------------------------
+        filepath = QFileDialog.getOpenFileName()[0]
+        # Узнаём путь файла --------------------------------------------------------
+
+    def send():
+        addr_from = mail_from
+        passwd = password
+        addr_to = ui.mail_to_form.text()
+        sub = ui.subject_form.text()
+        message = ui.message_form.toPlainText()
+        time = int(ui.timer_form.text())
         # Проверка используемого провайдера ----------------------------------------
         if addr_from[-9:] == 'gmail.com':
             _server = 'smtp.gmail.com'
@@ -176,9 +157,9 @@ def send():
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
-                messagebox.showinfo('Успех', 'Письмо успешно отправлено')
+                success()
             except:
-                messagebox.showerror('Ошибка', 'Письмо не отправлено')
+                error()
         else:
             try:
                 msg.attach(MIMEText(message, 'plain'))
@@ -188,14 +169,27 @@ def send():
                 sleep(time)
                 server.send_message(msg)
                 server.quit()
-                messagebox.showinfo('Успех', 'Письмо успешно отправлено')
+                success()
             except:
-                messagebox.showerror('Ошибка', 'Письмо не отправлено')
+               error()
 
-def open_site():
-    webbrowser.open_new('https://github.com/MatroCholo/email-sender')
-# Запуск ------------------------------------------------------------------------
-try:
-    mainWindow()
-except:
-    print('Ошибка! Убедитесь, что все компоненты установлены верно.\nБольше информации: https://github.com/MatroCholo/email-sender')
+
+
+
+
+        
+
+        
+    ui.send_button.clicked.connect(send)
+    ui.add_file_button.clicked.connect(add_files)
+
+
+    
+
+    
+
+
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    loginwindow()
