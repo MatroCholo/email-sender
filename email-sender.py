@@ -183,12 +183,6 @@ def main(mail_from, password):
     ui.send_button.clicked.connect(send)
     ui.add_file_button.clicked.connect(add_files)
 
-
-    
-
-    
-
-
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
