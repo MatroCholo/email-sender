@@ -173,12 +173,6 @@ def main(mail_from, password):
             except:
                error()
 
-
-
-
-
-        
-
         
     ui.send_button.clicked.connect(send)
     ui.add_file_button.clicked.connect(add_files)
