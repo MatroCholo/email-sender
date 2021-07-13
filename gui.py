@@ -1,3 +1,4 @@
+import sys, os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -10,9 +11,14 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(501, 476))
         MainWindow.setMouseTracking(False)
         MainWindow.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
+        # Нужно для сохранения иконки при упаковке pyinstaller
+        def resource_path(relative_path):
+            base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+            return os.path.join(base_path, relative_path)
+
+        icon = resource_path('icon.ico')
+        
+        MainWindow.setWindowIcon(QtGui.QIcon(icon))
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -61,6 +67,7 @@ class Ui_MainWindow(object):
         self.timer_form.setGeometry(QtCore.QRect(380, 40, 91, 31))
         self.timer_form.setStyleSheet("border-radius:10px;\n"
 "background-color: rgb(255, 255, 255);")
+        self.timer_form.setPlaceholderText("")
         self.timer_form.setObjectName("timer_form")
         self.timer_text = QtWidgets.QLabel(self.buttons)
         self.timer_text.setGeometry(QtCore.QRect(380, 10, 68, 16))
@@ -114,9 +121,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Email Sender, v1.5.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Email Sender, v1.5.2"))
         self.add_file_button.setText(_translate("MainWindow", "Файл"))
         self.send_button.setText(_translate("MainWindow", "Отправить"))
+        self.timer_form.setText(_translate("MainWindow", "0"))
         self.timer_text.setText(_translate("MainWindow", "Таймер (сек):"))
         self.message_text_text.setText(_translate("MainWindow", "Текст сообщения:"))
         self.mail_to_text.setText(_translate("MainWindow", "Почта получателя:"))
