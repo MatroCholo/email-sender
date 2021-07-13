@@ -23,11 +23,14 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Email Sender, v1.5 - Авторизация</string>
+   <string>Авторизация</string>
   </property>
   <property name="windowIcon">
    <iconset>
     <normaloff>icon.ico</normaloff>icon.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="password_form">
@@ -52,8 +55,8 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius:10px;
+     <string notr="true">background-color: #ffffff;
+border-radius: 10px;
 </string>
     </property>
    </widget>
@@ -123,9 +126,20 @@ border-radius:10px;
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-radius:10px;
-background-color: rgb(255, 255, 255);
-</string>
+     <string notr="true">QPushButton {
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: #f7f7f7;
+	border-radius: 10px;
+}
+
+QPushButton:pressed {
+	background-color: #e7e7e7;
+	border-radius: 10px;
+}</string>
     </property>
     <property name="text">
      <string>Сайт проекта</string>
@@ -144,9 +158,20 @@ background-color: rgb(255, 255, 255);
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-radius:10px;
-background-color: rgb(255, 255, 255);
-</string>
+     <string notr="true">QPushButton {
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: #f7f7f7;
+	border-radius: 10px;
+}
+
+QPushButton:pressed {
+	background-color: #e7e7e7;
+	border-radius: 10px;
+}</string>
     </property>
     <property name="text">
      <string>Авторизация</string>
@@ -154,6 +179,12 @@ background-color: rgb(255, 255, 255);
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>mail_from_form</tabstop>
+  <tabstop>password_form</tabstop>
+  <tabstop>login_button</tabstop>
+  <tabstop>site_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
