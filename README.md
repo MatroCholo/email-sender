@@ -21,19 +21,23 @@
 - Запустите **email-sender.exe**
 
 **Linux:**
-- Корректная работа **не гарантируется**. Возможны неправильная отрисовка и неработоспособность функций.
-- Установите **Python 3.x** и **git** в соответствии с вашим дистрибутивом,
-- Установите модуль **validate_email** (pip install validate_email)
-- Установите библиотеку **PyQt5** (pip install pyqt5)
+- Установите **Python 3.x**, **pip3** и **git** в соответствии с вашим дистрибутивом,
+- Установите модуль **validate_email** (pip3 install validate_email)
+- Установите библиотеку **PyQt5** (pip3 install pyqt5)
 - git clone **https://github.com/MatroCholo/email-sender**
-- cd **email-sender/**
-- python **email-sender.py**
+- cd **email-sender/** && python3 **email-sender.py**
 
 ## Ручная конвертация .py в .exe:
 - Установите **Python 3.x**.
 - Нажмите **Windows + R**, введите **cmd** и нажмите **Enter**,
 - В открывшемся окне введите **pip install pyinstaller pyqt5 pyqt5-tools**,
 - После установки введите:
+
+**pyuic5 -x C:\Directory\file.ui -o C:\Directory\file.py**, где
+- **pyuic5** - **команда конвертирования .ui файла с GUI в .py**
+- **C:\Directory\file.ui** - **путь к файлу с расширением .ui** 
+- **C:\Directory\file.py** - **готовый файл**
+
 **pyinstaller C:\Directory\file.py --onefile --noconsole --icon C:\Directory\file.icon**, где
 - - **pyinstaller** - **команда конвертирования**,
 - - **C:\Directory\file.py** - **путь к файлу с расширением .py**,
