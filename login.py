@@ -1,3 +1,4 @@
+import sys, os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -7,9 +8,13 @@ class Ui_loginWindow(object):
         loginWindow.resize(352, 200)
         loginWindow.setMinimumSize(QtCore.QSize(352, 200))
         loginWindow.setMaximumSize(QtCore.QSize(352, 200))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        loginWindow.setWindowIcon(icon)
+        # Нужно для сохранения иконки при упаковке pyinstaller
+        def resource_path(relative_path):
+            base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+            return os.path.join(base_path, relative_path)
+
+        icon = resource_path('icon.ico')
+        loginWindow.setWindowIcon(QtGui.QIcon(icon))
         loginWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(loginWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -90,13 +95,3 @@ class Ui_loginWindow(object):
         self.mail_to_text.setText(_translate("loginWindow", "Пароль:"))
         self.site_button.setText(_translate("loginWindow", "Сайт проекта"))
         self.login_button.setText(_translate("loginWindow", "Авторизация"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    loginWindow = QtWidgets.QMainWindow()
-    ui = Ui_loginWindow()
-    ui.setupUi(loginWindow)
-    loginWindow.show()
-    sys.exit(app.exec_())
