@@ -1,4 +1,4 @@
-<h1 align="center">Email Sender, v1.5</h1>
+<h1 align="center">Email Sender, v1.5.1</h1>
 <h4 align="center">Email Sender - это простая программа, позволяющая отправлять электронной почту без необходимости открывать Веб-версию или запускать отдельный клиент.</h4>
 
 ## Предупреждения:
@@ -31,7 +31,7 @@
 ## Ручная конвертация .py в .exe:
 - Установите **Python 3.x**.
 - Нажмите **Windows + R**, введите **cmd** и нажмите **Enter**,
-- В открывшемся окне введите **pip install pyinstaller**,
+- В открывшемся окне введите **pip install pyinstaller pyqt5 pyqt5-tools**,
 - После установки введите:
 **pyinstaller C:\Directory\file.py --onefile --noconsole --icon C:\Directory\file.icon**, где
 - - **pyinstaller** - **команда конвертирования**,
@@ -44,8 +44,11 @@
 
 | Версия       | Поддержка          |
 | -------------| ------------------ |
-| v1.5         | :white_check_mark: |
-| <v1.4.2      | :x:                |
+| v1.5.1       | :white_check_mark: |
+| v1.5         | :x:                |
+| v1.4.2       | :white_check_mark: |
+| <v1.4.1      | :x:                |
+
 
 ## Обратная связь:
 - Telegram: https://t.me/MatroCholo
