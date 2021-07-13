@@ -18,37 +18,43 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.buttons = QtWidgets.QGroupBox(self.centralwidget)
         self.buttons.setGeometry(QtCore.QRect(10, 380, 481, 91))
+        self.buttons.setStyleSheet("")
         self.buttons.setTitle("")
         self.buttons.setObjectName("buttons")
         self.add_file_button = QtWidgets.QPushButton(self.buttons)
         self.add_file_button.setGeometry(QtCore.QRect(10, 10, 101, 31))
         self.add_file_button.setMouseTracking(False)
-        self.add_file_button.setStyleSheet("border-radius:10px;\n"
-"background-color: rgb(255, 255, 255);\n"
-"")
+        self.add_file_button.setStyleSheet("QPushButton {\n"
+"    background-color: #ffffff;\n"
+"    border-radius: 10px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #f7f7f7;\n"
+"    border-radius: 10px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #e7e7e7;\n"
+"    border-radius: 10px;\n"
+"}")
         self.add_file_button.setObjectName("add_file_button")
         self.send_button = QtWidgets.QPushButton(self.buttons)
         self.send_button.setGeometry(QtCore.QRect(10, 50, 101, 31))
         self.send_button.setMouseTracking(False)
         self.send_button.setStyleSheet("QPushButton {\n"
-"    background-color: #272727;\n"
-"    color: #fff;\n"
-"    border-radius: 15px;\n"
-"    font: 63 12pt \"Qanelas SemiBold\";\n"
+"    background-color: #ffffff;\n"
+"    border-radius: 10px;\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"    background-color: #303030;\n"
-"    color: #fff;\n"
-"    border-radius: 15px;\n"
-"    font: 63 12pt \"Qanelas SemiBold\";\n"
+"    background-color: #f7f7f7;\n"
+"    border-radius: 10px;\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
-"    background-color: #343434;\n"
-"    color: #fff;\n"
-"    border-radius: 15px;\n"
-"    font: 63 12pt \"Qanelas SemiBold\";\n"
+"    background-color: #e7e7e7;\n"
+"    border-radius: 10px;\n"
 "}")
         self.send_button.setObjectName("send_button")
         self.timer_form = QtWidgets.QLineEdit(self.buttons)
@@ -61,6 +67,7 @@ class Ui_MainWindow(object):
         self.timer_text.setObjectName("timer_text")
         self.email = QtWidgets.QGroupBox(self.centralwidget)
         self.email.setGeometry(QtCore.QRect(10, 10, 481, 361))
+        self.email.setStyleSheet("")
         self.email.setTitle("")
         self.email.setObjectName("email")
         self.message_text_text = QtWidgets.QLabel(self.email)
@@ -99,10 +106,15 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.mail_to_form, self.subject_form)
+        MainWindow.setTabOrder(self.subject_form, self.message_form)
+        MainWindow.setTabOrder(self.message_form, self.timer_form)
+        MainWindow.setTabOrder(self.timer_form, self.add_file_button)
+        MainWindow.setTabOrder(self.add_file_button, self.send_button)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Email Sender, v1.5"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Email Sender, v1.5.1"))
         self.add_file_button.setText(_translate("MainWindow", "Файл"))
         self.send_button.setText(_translate("MainWindow", "Отправить"))
         self.timer_text.setText(_translate("MainWindow", "Таймер (сек):"))
