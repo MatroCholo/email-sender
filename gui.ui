@@ -32,7 +32,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Email Sender, v1.5</string>
+   <string>Email Sender, v1.5.1</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -51,6 +51,9 @@
       <height>91</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="title">
      <string/>
     </property>
@@ -67,9 +70,20 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-radius:10px;
-background-color: rgb(255, 255, 255);
-</string>
+      <string notr="true">QPushButton {
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: #f7f7f7;
+	border-radius: 10px;
+}
+
+QPushButton:pressed {
+	background-color: #e7e7e7;
+	border-radius: 10px;
+}</string>
      </property>
      <property name="text">
       <string>Файл</string>
@@ -89,24 +103,18 @@ background-color: rgb(255, 255, 255);
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	background-color: #272727;
-	color: #fff;
-	border-radius: 15px;
-	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+	background-color: #ffffff;
+	border-radius: 10px;
 }
 
 QPushButton:hover {
-	background-color: #303030;
-	color: #fff;
-	border-radius: 15px;
-	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+	background-color: #f7f7f7;
+	border-radius: 10px;
 }
 
 QPushButton:pressed {
-	background-color: #343434;
-	color: #fff;
-	border-radius: 15px;
-	font: 63 12pt &quot;Qanelas SemiBold&quot;;
+	background-color: #e7e7e7;
+	border-radius: 10px;
 }</string>
      </property>
      <property name="text">
@@ -149,6 +157,9 @@ background-color: rgb(255, 255, 255);</string>
       <width>481</width>
       <height>361</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="title">
      <string/>
@@ -263,6 +274,14 @@ border-radius:10px;
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>mail_to_form</tabstop>
+  <tabstop>subject_form</tabstop>
+  <tabstop>message_form</tabstop>
+  <tabstop>timer_form</tabstop>
+  <tabstop>add_file_button</tabstop>
+  <tabstop>send_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
